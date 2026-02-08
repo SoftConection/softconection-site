@@ -107,7 +107,7 @@ export const LoginPage: React.FC = () => {
             {/* Sign Up Link */}
             <p className="text-center text-sm text-muted-foreground">
               Não tem conta?{" "}
-              <a href="/auth/register" className="text-primary hover:text-primary/80 font-medium transition-colors">
+              <a href="/auth/LoginPage.tsx" className="text-primary hover:text-primary/80 font-medium transition-colors">
                 Criar agora
               </a>
             </p>
