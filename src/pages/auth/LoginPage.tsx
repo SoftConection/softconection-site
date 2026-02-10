@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
 
-export const LoginPage: React.FC = () => {
+const LoginContent: React.FC = () => {
   const [email, setEmail] = useState("admin@softconection.com");
   const [password, setPassword] = useState("password");
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +28,42 @@ export const LoginPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = (credentialResponse: any) => {
+    try {
+      // Decodificar o JWT token
+      const token = credentialResponse.credential;
+      const decoded = JSON.parse(atob(token.split(".")[1]));
+
+      // Armazenar informações do usuário
+      const userData = {
+        id: decoded.sub,
+        name: decoded.name,
+        email: decoded.email,
+        picture: decoded.picture,
+        verified: decoded.email_verified,
+      };
+
+      // Armazenar no localStorage
+      localStorage.setItem("google_auth_token", token);
+      localStorage.setItem("user_data", JSON.stringify(userData));
+
+      // Executar login
+      login(userData);
+
+      // Redirecionar para dashboard
+      toast.success("Bem-vindo ao SoftConection!");
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      console.error("Erro ao processar autenticação Google:", error);
+      toast.error("Erro ao fazer login com Google");
+    }
+  };
+
+  const handleGoogleError = () => {
+    console.log("Falha no login com Google");
+    toast.error("Falha ao fazer login com Google");
   };
 
   return (
@@ -103,15 +140,36 @@ export const LoginPage: React.FC = () => {
               {isLoading ? "Entrando..." : "Entrar"}
               <ArrowRight className="w-4 h-4" />
             </Button>
-
-            {/* Sign Up Link */}
-            <p className="text-center text-sm text-muted-foreground">
-              Não tem conta?{" "}
-              <a href="/auth/register" className="text-primary hover:text-primary/80 font-medium transition-colors">
-                Criar agora
-              </a>
-            </p>
           </form>
+
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-border/40"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-card text-muted-foreground">Ou continue com</span>
+            </div>
+          </div>
+
+          {/* Google Login */}
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              text="signin"
+              size="large"
+              locale="pt_BR"
+            />
+          </div>
+
+          {/* Sign Up Link */}
+          <p className="text-center text-sm text-muted-foreground mt-6">
+            Não tem conta?{" "}
+            <a href="/auth/register" className="text-primary hover:text-primary/80 font-medium transition-colors">
+              Criar agora
+            </a>
+          </p>
         </Card>
 
         {/* Demo Credentials */}
@@ -122,5 +180,16 @@ export const LoginPage: React.FC = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export const LoginPage: React.FC = () => {
+  const googleClientId =
+    "769154537622-meid4vk2fb5rsmip5oh59kpc5m7jco6l.apps.googleusercontent.com";
+
+  return (
+    <GoogleOAuthProvider clientId={googleClientId}>
+      <LoginContent />
+    </GoogleOAuthProvider>
   );
 };

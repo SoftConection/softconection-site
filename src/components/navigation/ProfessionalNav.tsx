@@ -67,16 +67,24 @@ export const ProfessionalNav: React.FC<ProfessionalNavProps> = ({
           <div className="flex items-center">
             <button
               onClick={onLogoClick}
-              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+              className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
             >
               <img
                 src={logoUrl}
                 alt="SoftConection"
                 className={cn(
-                  "transition-all duration-300",
-                  isScrolled ? "h-10" : "h-12"
+                  "transition-all duration-300 drop-shadow-md group-hover:drop-shadow-lg",
+                  isScrolled ? "h-10" : "h-14"
                 )}
               />
+              <span className={cn(
+                "font-bold transition-all duration-300 hidden sm:inline",
+                isScrolled 
+                  ? "text-lg text-gray-900" 
+                  : "text-xl text-gray-900"
+              )}>
+                SoftConection
+              </span>
             </button>
           </div>
 

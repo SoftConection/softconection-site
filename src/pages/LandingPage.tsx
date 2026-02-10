@@ -110,15 +110,15 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-gradient-to-b from-slate-50 via-blue-50 to-cyan-50">
       {/* Navigation */}
       <ProfessionalNav
         links={navLinks}
         onLogoClick={() => navigate("/")}
         cta={{
-          label: isAuthenticated ? "Dashboard" : "Começar",
+          label: isAuthenticated ? "Dashboard" : "Entrar",
           onClick: () =>
-            navigate(isAuthenticated ? "/dashboard" : "/auth/register"),
+            navigate(isAuthenticated ? "/dashboard" : "/auth/login"),
           variant: "primary",
         }}
       />
@@ -126,7 +126,6 @@ export default function LandingPage() {
       {/* Hero Section */}
       <HeroSection
         title="Soluções de TI Profissionais para Seu Negócio"
-        subtitle="Transformação Digital"
         description="Da reparação de equipamentos ao desenvolvimento de software. Oferecemos 8 categorias de serviços com mais de 48 soluções profissionais para empresas de todos os tamanhos."
         features={[
           "Suporte 24/7 disponível",
@@ -134,9 +133,9 @@ export default function LandingPage() {
           "Atendimento em até 2 horas",
         ]}
         primaryCTA={{
-          label: isAuthenticated ? "Ver Serviços" : "Começar Gratuitamente",
+          label: isAuthenticated ? "Ver Serviços" : "Fazer Login",
           onClick: () =>
-            navigate(isAuthenticated ? "/services" : "/auth/register"),
+            navigate(isAuthenticated ? "/services" : "/auth/login"),
         }}
         secondaryCTA={{
           label: "Explorar Categorias",

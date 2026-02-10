@@ -13,6 +13,7 @@ import { NetworkErrorHandler } from "@/components/NetworkErrorHandler";
 // Pages
 import { LoginPage } from "@/pages/auth/LoginPage";
 import { RegisterPage } from "@/pages/auth/RegisterPage";
+import { GoogleLoginPage } from "@/pages/auth/GoogleLoginPage";
 import { DashboardPage } from "@/pages/dashboard/DashboardPage";
 import { ServicesPage } from "@/pages/services/ServicesPage";
 import { CategoryPage } from "@/pages/services/CategoryPage";
