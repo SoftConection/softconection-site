@@ -13,72 +13,88 @@ import {
   TrendingUp,
   ArrowRight,
   CheckCircle2,
-  Smartphone,
   ChevronDown,
+  Settings,
+  Phone,
+  Video,
+  Palette,
+  Clock,
 } from "lucide-react";
+import { SERVICE_CATEGORIES, BRAND_FEATURES } from "@/config/branding";
 import { cn } from "@/lib/utils";
 
+// Mapeamento de ícones para categorias
 const CATEGORIES = [
   {
     id: "repair",
-    icon: "🔧",
+    icon: Wrench,
     title: "Reparação de Equipamentos",
     description: "Serviços profissionais de reparação e manutenção",
+    color: "text-blue-500",
   },
   {
     id: "software",
-    icon: "💻",
+    icon: Code2,
     title: "Desenvolvimento de Software",
     description: "Soluções personalizadas e robustas",
+    color: "text-purple-500",
   },
   {
     id: "consulting",
-    icon: "📋",
+    icon: Zap,
     title: "Consultoria TI",
     description: "Orientação especializada em infraestrutura",
+    color: "text-yellow-500",
   },
   {
     id: "maintenance",
-    icon: "🛠️",
+    icon: Settings,
     title: "Manutenção de Sistemas",
     description: "Suporte contínuo e manutenção",
+    color: "text-green-500",
   },
   {
     id: "support",
-    icon: "📞",
+    icon: Phone,
     title: "Suporte Técnico",
     description: "Resolução rápida de problemas",
+    color: "text-red-500",
   },
   {
     id: "cctv",
-    icon: "📹",
+    icon: Video,
     title: "Sistemas CCTV",
     description: "Soluções de vigilância por vídeo",
+    color: "text-orange-500",
   },
   {
     id: "design",
-    icon: "🎨",
+    icon: Palette,
     title: "Design Gráfico",
     description: "Criação de conteúdo visual",
+    color: "text-pink-500",
   },
   {
     id: "marketing",
-    icon: "📱",
+    icon: TrendingUp,
     title: "Marketing Digital",
     description: "Estratégias e presença online",
+    color: "text-cyan-500",
   },
 ];
 
 const features = [
-  { title: "Resposta Rápida", description: "Atendimento em até 2 horas" },
+  { icon: Clock, title: "Resposta Rápida", description: "Atendimento em até 2 horas" },
   {
+    icon: CheckCircle2,
     title: "Profissionais Certificados",
     description: "Equipe altamente qualificada",
   },
-  { title: "Garantia de Qualidade", description: "100% de satisfação garantida" },
+  { icon: Shield, title: "Garantia de Qualidade", description: "100% de satisfação garantida" },
   {
-    title: "Preços Competitivos",
-    description: "Melhor custo-benefício do mercado",
+    icon: Users,
+    title: "Suporte Dedicado",
+    description: "Atendimento personalizado",
   },
 ];
 
@@ -207,35 +223,38 @@ export default function LandingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {CATEGORIES.map((category) => (
-              <div
-                key={category.id}
-                onClick={() => handleCategoryClick(category.id)}
-                className="group bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-cyan-500 transition-all cursor-pointer hover:-translate-y-2 hover:shadow-2xl"
-              >
-                <div className="space-y-4">
-                  <div className="text-5xl group-hover:scale-110 transition-transform">
-                    {category.icon}
+            {CATEGORIES.map((category) => {
+              const IconComponent = category.icon;
+              return (
+                <div
+                  key={category.id}
+                  onClick={() => handleCategoryClick(category.id)}
+                  className="group bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-cyan-500 transition-all cursor-pointer hover:-translate-y-2 hover:shadow-2xl"
+                >
+                  <div className="space-y-4">
+                    <div className={cn("inline-flex p-3 rounded-lg bg-gray-800/50 group-hover:bg-gray-700 transition-colors", category.color)}>
+                      <IconComponent className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-display font-bold text-white mb-1">
+                        {category.title}
+                      </h3>
+                      <p className="text-sm text-gray-400">
+                        {category.description}
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => handleCategoryClick(category.id)}
+                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white gap-2"
+                      size="sm"
+                    >
+                      Ver Serviços
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-display font-bold text-white mb-1">
-                      {category.title}
-                    </h3>
-                    <p className="text-sm text-gray-400">
-                      {category.description}
-                    </p>
-                  </div>
-                  <Button
-                    onClick={() => handleCategoryClick(category.id)}
-                    className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white gap-2"
-                    size="sm"
-                  >
-                    Ver Serviços
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -290,14 +309,20 @@ export default function LandingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, idx) => (
-              <Card key={idx} className="p-6 bg-gray-900 border-gray-800 hover:border-cyan-500 transition-colors">
-                <h3 className="font-display font-bold text-white mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-gray-400">{feature.description}</p>
-              </Card>
-            ))}
+            {features.map((feature, idx) => {
+              const FeatureIcon = feature.icon;
+              return (
+                <Card key={idx} className="p-6 bg-gray-900 border-gray-800 hover:border-cyan-500 transition-colors group">
+                  <div className="inline-flex p-2 rounded-lg bg-gray-800/50 mb-4 group-hover:bg-cyan-500/10 transition-colors">
+                    <FeatureIcon className="w-6 h-6 text-cyan-400" />
+                  </div>
+                  <h3 className="font-display font-bold text-white mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-gray-400">{feature.description}</p>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
