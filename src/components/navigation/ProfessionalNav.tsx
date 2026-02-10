@@ -57,31 +57,34 @@ export const ProfessionalNav: React.FC<ProfessionalNavProps> = ({
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
           ? "bg-white/90 backdrop-blur-xl border-b border-gray-200 shadow-sm"
-          : "bg-transparent border-b border-transparent",
+          : "bg-gradient-to-b from-slate-950/20 to-transparent backdrop-blur-sm border-b border-cyan-500/10",
         className
       )}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <nav className="flex items-center justify-between h-20">
+        <nav className="flex items-center justify-between h-24 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
             <button
               onClick={onLogoClick}
-              className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
+              className="flex items-center gap-3 hover:opacity-90 transition-opacity group"
             >
               <img
                 src={logoUrl}
                 alt="SoftConection"
                 className={cn(
-                  "transition-all duration-300 drop-shadow-md group-hover:drop-shadow-lg",
-                  isScrolled ? "h-10" : "h-14"
+                  "transition-all duration-300 drop-shadow-lg group-hover:drop-shadow-2xl filter brightness-110",
+                  isScrolled ? "h-12 md:h-10" : "h-20 md:h-16"
                 )}
+                style={{
+                  filter: isScrolled ? "drop-shadow(0 4px 8px rgba(0,0,0,0.15))" : "drop-shadow(0 0 20px rgba(0,217,255,0.4)) drop-shadow(0 4px 12px rgba(0,0,0,0.3))",
+                }}
               />
               <span className={cn(
-                "font-bold transition-all duration-300 hidden sm:inline",
+                "font-bold transition-all duration-300 hidden sm:inline whitespace-nowrap",
                 isScrolled 
                   ? "text-lg text-gray-900" 
-                  : "text-xl text-gray-900"
+                  : "text-2xl bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
               )}>
                 SoftConection
               </span>
