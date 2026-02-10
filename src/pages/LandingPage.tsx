@@ -110,7 +110,7 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="w-full bg-gradient-to-b from-slate-50 via-blue-50 to-cyan-50">
+    <div className="w-full bg-gradient-to-br from-background via-background to-primary/5">
       {/* Navigation */}
       <ProfessionalNav
         links={navLinks}

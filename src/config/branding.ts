@@ -141,13 +141,13 @@ export const COMPANY_INFO = {
     },
   ],
   contact: {
-    phone: "+55 11 98765-4321",
+    phone: "+55 11 96826-8377",
     phoneAngola: "+244 935358417",
     email: "softconection25@gmail.com",
     emailAlternative: "contato@softconection.com",
     support: "suporte@softconection.com",
     sales: "vendas@softconection.com",
-    whatsapp: "5511987654321",
+    whatsapp: "5511968268377",
     whatsappAngola: "244935358417",
   },
   social: {
