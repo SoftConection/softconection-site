@@ -91,7 +91,7 @@ export const ResponsiveGrid: React.FC<GridProps> = ({
   );
 };
 
-interface Flex Props extends React.HTMLAttributes<HTMLDivElement> {
+interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
   direction?: "row" | "col";
   alignItems?: "start" | "center" | "end" | "stretch";
   justifyContent?: "start" | "center" | "between" | "around" | "evenly";
