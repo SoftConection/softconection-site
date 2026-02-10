@@ -122,22 +122,43 @@ export const BRAND_FEATURES = [
 export const COMPANY_INFO = {
   name: "SoftConection",
   tagline: "Soluções de TI Profissionais",
+  description:
+    "Empresa especializada em soluções de TI, desenvolvimento de software, consultoria técnica e suporte profissional.",
   locations: [
     {
       city: "São Paulo",
       country: "Brasil",
       timezone: "America/Sao_Paulo",
+      address: "São Paulo, SP - Brasil",
+      flag: "🇧🇷",
     },
     {
       city: "Luanda",
       country: "Angola",
       timezone: "Africa/Luanda",
+      address: "Luanda - Angola",
+      flag: "🇦🇴",
     },
   ],
   contact: {
-    phone: "+55 11 XXXXX-XXXX",
+    phone: "+55 11 98765-4321",
     email: "contato@softconection.com",
-    address: "São Paulo, Brasil",
+    support: "suporte@softconection.com",
+    sales: "vendas@softconection.com",
+    whatsapp: "5511987654321",
+  },
+  social: {
+    linkedin: "https://linkedin.com/company/softconection",
+    github: "https://github.com/softconection",
+    twitter: "https://twitter.com/softconection",
+    instagram: "https://instagram.com/softconection",
+  },
+  company: {
+    founded: 2014,
+    employees: "50+",
+    clients: "500+",
+    projects: "1000+",
+    expertise: "10+ anos",
   },
 };
 

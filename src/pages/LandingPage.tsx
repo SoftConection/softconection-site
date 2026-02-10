@@ -1,9 +1,8 @@
 import React from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import logo from "@/assets/logo.png";
 import {
   Wrench,
   Code2,
@@ -11,91 +10,84 @@ import {
   Shield,
   Users,
   TrendingUp,
-  ArrowRight,
-  CheckCircle2,
-  ChevronDown,
   Settings,
   Phone,
   Video,
   Palette,
   Clock,
+  Terminal,
 } from "lucide-react";
-import { SERVICE_CATEGORIES, BRAND_FEATURES } from "@/config/branding";
+import { COMPANY_INFO } from "@/config/branding";
+import { ProfessionalNav } from "@/components/navigation/ProfessionalNav";
+import { ServiceCard, StatCard } from "@/components/cards/ProfessionalCards";
+import { HeroSection } from "@/components/sections/HeroSection";
+import { ProfessionalFooter } from "@/components/footers/ProfessionalFooter";
 import { cn } from "@/lib/utils";
 
-// Mapeamento de ícones para categorias
+// Categorias com ícones Lucide
 const CATEGORIES = [
   {
     id: "repair",
     icon: Wrench,
     title: "Reparação de Equipamentos",
-    description: "Serviços profissionais de reparação e manutenção",
-    color: "text-blue-500",
+    description: "Reparo profissional e manutenção preventiva de computadores, impressoras e periféricos",
   },
   {
     id: "software",
     icon: Code2,
     title: "Desenvolvimento de Software",
-    description: "Soluções personalizadas e robustas",
-    color: "text-purple-500",
+    description: "Aplicações web, mobile e desktop customizadas para seu negócio",
   },
   {
     id: "consulting",
     icon: Zap,
     title: "Consultoria TI",
-    description: "Orientação especializada em infraestrutura",
-    color: "text-yellow-500",
+    description: "Estratégias de infraestrutura, segurança e transformação digital",
   },
   {
     id: "maintenance",
     icon: Settings,
     title: "Manutenção de Sistemas",
-    description: "Suporte contínuo e manutenção",
-    color: "text-green-500",
+    description: "Monitoramento 24/7 e suporte contínuo para seus servidores",
   },
   {
     id: "support",
     icon: Phone,
     title: "Suporte Técnico",
-    description: "Resolução rápida de problemas",
-    color: "text-red-500",
+    description: "Atendimento ágil e eficiente para seus problemas técnicos",
   },
   {
     id: "cctv",
     icon: Video,
     title: "Sistemas CCTV",
-    description: "Soluções de vigilância por vídeo",
-    color: "text-orange-500",
+    description: "Vigilância profissional com tecnologia de ponta",
   },
   {
     id: "design",
     icon: Palette,
     title: "Design Gráfico",
-    description: "Criação de conteúdo visual",
-    color: "text-pink-500",
+    description: "Branding, identidade visual e materiais de marketing",
   },
   {
     id: "marketing",
     icon: TrendingUp,
     title: "Marketing Digital",
-    description: "Estratégias e presença online",
-    color: "text-cyan-500",
+    description: "Estratégias de SEO, redes sociais e publicidade digital",
   },
 ];
 
 const features = [
-  { icon: Clock, title: "Resposta Rápida", description: "Atendimento em até 2 horas" },
-  {
-    icon: CheckCircle2,
-    title: "Profissionais Certificados",
-    description: "Equipe altamente qualificada",
-  },
-  { icon: Shield, title: "Garantia de Qualidade", description: "100% de satisfação garantida" },
-  {
-    icon: Users,
-    title: "Suporte Dedicado",
-    description: "Atendimento personalizado",
-  },
+  { icon: Clock, title: "Resposta em 2 Horas", description: "Atendimento ágil e eficiente", shortKey: "quick" },
+  { icon: CheckCircle2, title: "Certificações Profissionais", description: "Equipe com certificações internacionais", shortKey: "cert" },
+  { icon: Shield, title: "Qualidade Garantida", description: "100% de satisfação do cliente", shortKey: "quality" },
+  { icon: Users, title: "Suporte Dedicado", description: "Equipe dedicada ao seu sucesso", shortKey: "support" },
+];
+
+const stats = [
+  { label: "Clientes Atendidos", value: "500+", icon: Users },
+  { label: "Anos de Experiência", value: "10+", icon: Terminal },
+  { label: "Projetos Realizados", value: "1000+", icon: Code2 },
+  { label: "Profissionais", value: "50+", icon: Users },
 ];
 
 export default function LandingPage() {
@@ -110,115 +102,116 @@ export default function LandingPage() {
     }
   };
 
+  const navLinks = [
+    { label: "Serviços", href: "#services" },
+    { label: "Sobre", href: "#about" },
+    { label: "Recursos", href: "#features" },
+    { label: "Contato", href: "#contact" },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-950 to-gray-900">
+    <div className="w-full bg-white">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-gray-900/50 border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src={logo} alt="SoftConection" className="h-10 w-auto" />
-          </div>
-          <div className="flex items-center gap-4">
-            {!isAuthenticated ? (
-              <>
-                <Button
-                  variant="ghost"
-                  onClick={() => navigate("/auth/login")}
-                >
-                  Entrar
-                </Button>
-                <Button
-                  onClick={() => navigate("/auth/register")}
-                  className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
-                >
-                  Começar
-                </Button>
-              </>
-            ) : (
-              <Button
-                onClick={() => navigate("/dashboard")}
-                className="bg-gradient-to-r from-cyan-500 to-blue-500"
-              >
-                Dashboard
-              </Button>
-            )}
-          </div>
-        </div>
-      </nav>
+      <ProfessionalNav
+        links={navLinks}
+        onLogoClick={() => navigate("/")}
+        cta={{
+          label: isAuthenticated ? "Dashboard" : "Começar",
+          onClick: () =>
+            navigate(isAuthenticated ? "/dashboard" : "/auth/register"),
+          variant: "primary",
+        }}
+      />
 
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative pt-20">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-24 text-center space-y-8">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30">
-              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
-              <span className="text-sm text-cyan-400 font-medium">
-                Soluções Profissionais de TI
-              </span>
-            </div>
+      <HeroSection
+        title="Soluções de TI Profissionais para Seu Negócio"
+        subtitle="Transformação Digital"
+        description="Da reparação de equipamentos ao desenvolvimento de software. Oferecemos 8 categorias de serviços com mais de 48 soluções profissionais para empresas de todos os tamanhos."
+        features={[
+          "Suporte 24/7 disponível",
+          "Profissionais certificados",
+          "Atendimento em até 2 horas",
+        ]}
+        primaryCTA={{
+          label: isAuthenticated ? "Ver Serviços" : "Começar Gratuitamente",
+          onClick: () =>
+            navigate(isAuthenticated ? "/services" : "/auth/register"),
+        }}
+        secondaryCTA={{
+          label: "Explorar Categorias",
+          onClick: () => {
+            document.getElementById("services")?.scrollIntoView({
+              behavior: "smooth",
+            });
+          },
+        }}
+        variant="centered"
+      />
 
-            <h1 className="text-5xl md:text-7xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-400 to-blue-400">
-              Transforme Seu Negócio com Tecnologia
-            </h1>
-
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Desde reparação de equipamentos até desenvolvimento de software,
-              oferecemos soluções completas e confiáveis para empresas de todos
-              os tamanhos.
+      {/* Locações */}
+      <section className="py-16 bg-gray-50 border-y border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
+              Presente em Dois Continentes
+            </h2>
+            <p className="text-gray-600">
+              Atendimento profissional em Brasil e Angola
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-            <Button
-              size="lg"
-              onClick={() => navigate(isAuthenticated ? "/services" : "/auth/register")}
-              className="gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
-            >
-              {isAuthenticated ? "Ver Serviços" : "Começar Gratuitamente"}
-              <ArrowRight className="w-5 h-5" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => navigate("/services")}
-              className="border-gray-700 hover:bg-gray-800"
-            >
-              Explorar Categorias
-            </Button>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {COMPANY_INFO.locations.map((loc) => (
+              <div
+                key={loc.city}
+                className="p-8 rounded-2xl bg-white border-2 border-gray-200 hover:border-cyan-500 transition-colors text-center space-y-4"
+              >
+                <p className="text-4xl">{loc.flag}</p>
+                <h3 className="text-2xl font-display font-bold text-gray-900">
+                  {loc.city}
+                </h3>
+                <p className="text-gray-600">{loc.address}</p>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 mt-16 pt-8 border-t border-gray-800">
-            <div>
-              <p className="text-3xl font-bold text-cyan-400">500+</p>
-              <p className="text-sm text-gray-400">Clientes Satisfeitos</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-cyan-400">10+</p>
-              <p className="text-sm text-gray-400">Anos de Experiência</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-cyan-400">24/7</p>
-              <p className="text-sm text-gray-400">Suporte Disponível</p>
-            </div>
-          </div>
-
-          {/* Scroll Indicator */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <ChevronDown className="w-6 h-6 text-gray-600" />
+      {/* Stats Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-cyan-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map((stat, idx) => {
+              const StatIcon = stat.icon;
+              return (
+                <div key={idx} className="text-center">
+                  <div className="inline-flex justify-center mb-4">
+                    <StatIcon className="w-8 h-8 text-cyan-600" />
+                  </div>
+                  <p className="text-3xl md:text-4xl font-display font-bold text-gray-900">
+                    {stat.value}
+                  </p>
+                  <p className="text-sm md:text-base text-gray-600 mt-2">
+                    {stat.label}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="py-24 px-4 md:px-6">
-        <div className="max-w-7xl mx-auto">
+      <section id="services" className="py-20 md:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-white">
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
               Nossas Categorias de Serviços
             </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Explore nossas 8 áreas de especialidade com mais de 48 serviços profissionais
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              8 áreas de especialidade com mais de 48 serviços profissionais para
+              atender todas as suas necessidades de TI
             </p>
           </div>
 
@@ -226,32 +219,53 @@ export default function LandingPage() {
             {CATEGORIES.map((category) => {
               const IconComponent = category.icon;
               return (
-                <div
+                <ServiceCard
                   key={category.id}
-                  onClick={() => handleCategoryClick(category.id)}
-                  className="group bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 hover:border-cyan-500 transition-all cursor-pointer hover:-translate-y-2 hover:shadow-2xl"
-                >
-                  <div className="space-y-4">
-                    <div className={cn("inline-flex p-3 rounded-lg bg-gray-800/50 group-hover:bg-gray-700 transition-colors", category.color)}>
-                      <IconComponent className="w-8 h-8" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-display font-bold text-white mb-1">
-                        {category.title}
-                      </h3>
-                      <p className="text-sm text-gray-400">
-                        {category.description}
-                      </p>
-                    </div>
+                  icon={<IconComponent className="w-6 h-6 text-cyan-600" />}
+                  title={category.title}
+                  description={category.description}
+                  action={
                     <Button
                       onClick={() => handleCategoryClick(category.id)}
-                      className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white gap-2"
+                      className="w-full gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
                       size="sm"
                     >
                       Ver Serviços
                       <ArrowRight className="w-4 h-4" />
                     </Button>
+                  }
+                  onClick={() => handleCategoryClick(category.id)}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 md:py-28 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
+              Por Que Escolher a SoftConection
+            </h2>
+            <p className="text-xl text-gray-600">
+              Qualidade, profissionalismo e dedicação em cada projeto
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.map((feature) => {
+              const FeatureIcon = feature.icon;
+              return (
+                <div key={feature.shortKey} className="p-8 rounded-2xl bg-white border-2 border-gray-200 hover:border-cyan-500 transition-all hover:shadow-lg group">
+                  <div className="inline-flex p-3 rounded-lg bg-cyan-100 mb-4 group-hover:bg-cyan-500 group-hover:text-white transition-colors">
+                    <FeatureIcon className="w-6 h-6 text-cyan-600 group-hover:text-white" />
                   </div>
+                  <h3 className="text-lg font-display font-bold text-gray-900 mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm">{feature.description}</p>
                 </div>
               );
             })}
@@ -260,161 +274,133 @@ export default function LandingPage() {
       </section>
 
       {/* About Section */}
-      <section className="py-24 px-4 md:px-6 bg-gradient-to-r from-gray-900/50 to-gray-900/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <section id="about" className="py-20 md:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Content */}
             <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-white">
-                Sobre a SoftConection
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900">
+                Conhece a SoftConection
               </h2>
-              <p className="text-lg text-gray-400">
-                A SoftConection é uma empresa líderi no mercado de TI, oferecendo soluções
-                inovadoras e personalizadas para empresas de todos os tamanhos. Com mais de
-                10 anos de experiência, garantimos qualidade e profissionalismo em cada projeto.
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Desde {COMPANY_INFO.company.founded}, a SoftConection é referência no
+                mercado de TI. Oferecemos soluções inovadoras, personalizadas e
+                confiáveis para empresas de todos os tamanhos.
               </p>
-              <div className="space-y-3">
+
+              <div className="space-y-4">
                 {[
-                  "Equipe de profissionais certificados",
-                  "Soluções personalizadas e escaláveis",
-                  "Suporte 24/7 dedicado",
+                  "Equipe de mais de 50 profissionais certificados",
+                  `Mais de 10 anos de experiência no mercado`,
+                  "Atendimento em São Paulo e Luanda",
+                  "Suporte dedicado 24/7",
                   "Garantia de satisfação 100%",
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-cyan-500" />
-                    <span className="text-gray-300">{item}</span>
+                  <div key={idx} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-700">{item}</span>
                   </div>
                 ))}
               </div>
+
+              <Button
+                onClick={() => navigate(isAuthenticated ? "/services" : "/auth/register")}
+                className="gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
+                size="lg"
+              >
+                Começar Agora
+                <ArrowRight className="w-5 h-5" />
+              </Button>
             </div>
 
+            {/* Image */}
             <div className="relative">
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center">
-                <img src={logo} alt="SoftConection" className="w-48 h-auto opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl opacity-10 blur-2xl"></div>
+              <div className="relative bg-gradient-to-br from-cyan-50 to-blue-50 p-8 md:p-12 rounded-2xl border-2 border-gray-200 flex items-center justify-center min-h-96">
+                <div className="text-center">
+                  <p className="text-6xl mb-4">💻</p>
+                  <h3 className="text-2xl font-display font-bold text-gray-900 mb-2">
+                    Soluções de TI Completas
+                  </h3>
+                  <p className="text-gray-600">
+                    Desde infraestrutura até desenvolvimento de software
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-24 px-4 md:px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 text-white">
-              Por que escolher a SoftConection
-            </h2>
-            <p className="text-lg text-gray-400">
-              Qualidade, profissionalismo e dedicação em cada projeto
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, idx) => {
-              const FeatureIcon = feature.icon;
-              return (
-                <Card key={idx} className="p-6 bg-gray-900 border-gray-800 hover:border-cyan-500 transition-colors group">
-                  <div className="inline-flex p-2 rounded-lg bg-gray-800/50 mb-4 group-hover:bg-cyan-500/10 transition-colors">
-                    <FeatureIcon className="w-6 h-6 text-cyan-400" />
-                  </div>
-                  <h3 className="font-display font-bold text-white mb-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-sm text-gray-400">{feature.description}</p>
-                </Card>
-              );
-            })}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section id="contato" className="py-24 px-4 md:px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <Card className="p-12 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30">
-            <h2 className="text-4xl font-display font-bold mb-4 text-white">
-              Pronto para transformar seu negócio?
-            </h2>
-            <p className="text-lg text-gray-400 mb-8">
-              Entre em contato conosco e descubra como podemos ajudar sua empresa
+      <section id="contact" className="py-20 md:py-28 bg-gradient-to-r from-cyan-600 to-blue-600 text-white">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 text-center space-y-8">
+          <h2 className="text-4xl md:text-5xl font-display font-bold">
+            Pronto para Transformar Seu Negócio?
+          </h2>
+          <p className="text-xl text-cyan-100 max-w-2xl mx-auto">
+            Entre em contato com o nosso time agora mesmo e descubra como podemos
+            ajudar sua empresa a crescer com tecnologia.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <Button
+              onClick={() =>
+                navigate(isAuthenticated ? "/services" : "/auth/register")
+              }
+              className="gap-2 bg-white text-cyan-600 hover:bg-cyan-50 font-semibold"
+              size="lg"
+            >
+              Começar Agora
+              <ArrowRight className="w-5 h-5" />
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="border-white text-white hover:bg-white/20"
+              size="lg"
+            >
+              <a href={`tel:${COMPANY_INFO.contact.phone}`}>
+                Ligar Agora
+              </a>
+            </Button>
+          </div>
+
+          {/* Contact Info */}
+          <div className="pt-8 border-t border-white/20 space-y-4">
+            <p className="text-sm text-cyan-100">
+              Ou entre em contato conosco através dos seguintes canais:
             </p>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-              <Button
-                size="lg"
-                onClick={() => navigate(isAuthenticated ? "/services" : "/auth/register")}
-                className="gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600"
+            <div className="flex flex-col sm:flex-row gap-6 justify-center text-sm">
+              <a
+                href={`mailto:${COMPANY_INFO.contact.email}`}
+                className="hover:text-cyan-200 transition-colors"
               >
-                Começar Agora
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-gray-700 hover:bg-gray-800"
-                asChild
+                📧 {COMPANY_INFO.contact.email}
+              </a>
+              <span className="hidden sm:block text-white/30">•</span>
+              <a
+                href={`tel:${COMPANY_INFO.contact.phone}`}
+                className="hover:text-cyan-200 transition-colors"
               >
-                <a href="tel:+5511999999999">+55 (11) 9999-9999</a>
-              </Button>
+                📱 {COMPANY_INFO.contact.phone}
+              </a>
+              <span className="hidden sm:block text-white/30">•</span>
+              <a
+                href={`https://wa.me/${COMPANY_INFO.contact.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-cyan-200 transition-colors"
+              >
+                💬 WhatsApp
+              </a>
             </div>
-          </Card>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-800 py-12 px-4 md:px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            {/* Brand */}
-            <div className="space-y-4">
-              <img src={logo} alt="SoftConection" className="h-10 w-auto" />
-              <p className="text-sm text-gray-400">
-                Soluções profissionais de TI para seu negócio
-              </p>
-            </div>
-
-            {/* Links */}
-            <div>
-              <h3 className="font-display font-bold text-white mb-4">Produto</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-cyan-400 transition">Serviços</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition">Preços</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition">Segurança</a></li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h3 className="font-display font-bold text-white mb-4">Empresa</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-cyan-400 transition">Sobre</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition">Blog</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition">Contato</a></li>
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h3 className="font-display font-bold text-white mb-4">Legal</h3>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-cyan-400 transition">Privacidade</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition">Termos</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition">Cookies</a></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom */}
-          <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between">
-            <p className="text-sm text-gray-400">
-              © 2024 SoftConection. Todos os direitos reservados.
-            </p>
-            <div className="flex items-center gap-4 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-cyan-400 transition">Twitter</a>
-              <a href="#" className="text-gray-400 hover:text-cyan-400 transition">LinkedIn</a>
-              <a href="#" className="text-gray-400 hover:text-cyan-400 transition">GitHub</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <ProfessionalFooter withNewsletter={true} />
     </div>
   );
 }
