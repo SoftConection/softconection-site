@@ -21,6 +21,7 @@ import { COMPANY_INFO } from "@/config/branding";
 import { ProfessionalNav } from "@/components/navigation/ProfessionalNav";
 import { ServiceCard, StatCard } from "@/components/cards/ProfessionalCards";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { HeroBgEffects } from "@/components/sections/HeroBgEffects";
 import { ProfessionalFooter } from "@/components/footers/ProfessionalFooter";
 import { cn } from "@/lib/utils";
 
@@ -98,7 +99,7 @@ export default function LandingPage() {
     if (isAuthenticated) {
       navigate(`/services/${categoryId}`);
     } else {
-      navigate("/auth/register");
+      navigate("/auth/login");
     }
   };
 
@@ -110,15 +111,18 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="w-full bg-gradient-to-br from-background via-background to-primary/5">
+    <div className="w-full bg-slate-950 text-white relative">
+      {/* Hero Background Effects */}
+      <HeroBgEffects className="fixed top-0 left-0 right-0 h-screen pointer-events-none" />
+      
       {/* Navigation */}
+      <div className="relative z-50">
       <ProfessionalNav
         links={navLinks}
         onLogoClick={() => navigate("/")}
         cta={{
-          label: isAuthenticated ? "Dashboard" : "Entrar",
-          onClick: () =>
-            navigate(isAuthenticated ? "/dashboard" : "/auth/login"),
+          label: "Entrar",
+          onClick: () => navigate("/auth/login"),
           variant: "primary",
         }}
       />
@@ -133,9 +137,8 @@ export default function LandingPage() {
           "Atendimento em até 2 horas",
         ]}
         primaryCTA={{
-          label: isAuthenticated ? "Ver Serviços" : "Fazer Login",
-          onClick: () =>
-            navigate(isAuthenticated ? "/services" : "/auth/login"),
+          label: "Iniciar Sessão",
+          onClick: () => navigate("/auth/login"),
         }}
         secondaryCTA={{
           label: "Explorar Categorias",
@@ -149,13 +152,13 @@ export default function LandingPage() {
       />
 
       {/* Locações */}
-      <section className="py-16 bg-gray-50 border-y border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+      <section className="relative py-16 border-y border-cyan-500/20 bg-slate-900/50 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
               Presente em Dois Continentes
             </h2>
-            <p className="text-gray-600">
+            <p className="text-cyan-300/80">
               Atendimento profissional em Brasil e Angola
             </p>
           </div>
@@ -164,13 +167,13 @@ export default function LandingPage() {
             {COMPANY_INFO.locations.map((loc) => (
               <div
                 key={loc.city}
-                className="p-8 rounded-2xl bg-white border-2 border-gray-200 hover:border-cyan-500 transition-colors text-center space-y-4"
+                className="p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-2 border-cyan-500/30 hover:border-cyan-500 transition-all hover:shadow-lg hover:shadow-cyan-500/20 text-center space-y-4 tech-fade"
               >
                 <p className="text-4xl">{loc.flag}</p>
-                <h3 className="text-2xl font-display font-bold text-gray-900">
+                <h3 className="text-2xl font-display font-bold text-white">
                   {loc.city}
                 </h3>
-                <p className="text-gray-600">{loc.address}</p>
+                <p className="text-cyan-300/70">{loc.address}</p>
               </div>
             ))}
           </div>
@@ -178,20 +181,20 @@ export default function LandingPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-cyan-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+      <section className="relative py-16 md:py-24 bg-gradient-to-b from-slate-900/30 to-slate-950 border-b border-cyan-500/10">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, idx) => {
               const StatIcon = stat.icon;
               return (
-                <div key={idx} className="text-center">
+                <div key={idx} className="text-center p-6 rounded-lg bg-slate-800/50 border border-cyan-500/20 hover:border-cyan-500/50 transition-all hover:shadow-lg hover:shadow-cyan-500/10">
                   <div className="inline-flex justify-center mb-4">
-                    <StatIcon className="w-8 h-8 text-cyan-600" />
+                    <StatIcon className="w-8 h-8 text-cyan-400" />
                   </div>
-                  <p className="text-3xl md:text-4xl font-display font-bold text-gray-900">
+                  <p className="text-3xl md:text-4xl font-display font-bold text-cyan-300">
                     {stat.value}
                   </p>
-                  <p className="text-sm md:text-base text-gray-600 mt-2">
+                  <p className="text-sm md:text-base text-cyan-300/70 mt-2">
                     {stat.label}
                   </p>
                 </div>
@@ -202,13 +205,13 @@ export default function LandingPage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="py-20 md:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+      <section id="services" className="relative py-20 md:py-28 bg-slate-950 border-b border-cyan-500/10">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
               Nossas Categorias de Serviços
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-cyan-200/70 max-w-3xl mx-auto">
               8 áreas de especialidade com mais de 48 serviços profissionais para
               atender todas as suas necessidades de TI
             </p>
@@ -397,6 +400,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      </div>
 
       {/* Footer */}
       <ProfessionalFooter withNewsletter={true} />

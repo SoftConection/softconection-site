@@ -23,11 +23,11 @@ export const ProfessionalCard: React.FC<ProfessionalCardProps> = ({
 }) => {
   const variantStyles = {
     default:
-      "bg-white border border-gray-200 rounded-xl shadow-sm",
+      "bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-slate-800 dark:border-cyan-500/20",
     elevated:
-      "bg-white border border-gray-100 rounded-xl shadow-md",
+      "bg-white border border-gray-100 rounded-xl shadow-md dark:bg-slate-800 dark:border-cyan-500/30",
     gradient:
-      "bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl shadow-sm",
+      "bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl shadow-sm dark:from-slate-800 dark:to-slate-900 dark:border-cyan-500/20",
   };
 
   return (
@@ -67,16 +67,16 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
     >
       <div className="space-y-4">
         {/* Icon Container */}
-        <div className="inline-flex p-3 rounded-lg bg-cyan-50 group-hover:bg-cyan-100 transition-colors duration-300">
+        <div className="inline-flex p-3 rounded-lg bg-cyan-50 group-hover:bg-cyan-100 transition-colors duration-300 dark:bg-cyan-500/10 dark:group-hover:bg-cyan-500/20">
           {icon}
         </div>
 
         {/* Content */}
         <div className="space-y-2">
-          <h3 className="font-display font-bold text-lg text-gray-900">
+          <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">
             {title}
           </h3>
-          <p className="text-sm text-gray-600">{description}</p>
+          <p className="text-sm text-gray-600 dark:text-cyan-300/70">{description}</p>
         </div>
 
         {/* Action */}
