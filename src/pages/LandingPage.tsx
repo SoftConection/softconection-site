@@ -352,7 +352,7 @@ export default function LandingPage() {
               onClick={() =>
                 navigate(isAuthenticated ? "/services" : "/auth/register")
               }
-              className="gap-2 bg-white text-cyan-600 hover:bg-cyan-50 font-semibold"
+              className="gap-2 bg-transparent border-2 border-cyan-500/60 text-white hover:border-cyan-400 hover:bg-slate-800/40 font-semibold backdrop-blur-sm transition-all shadow-lg shadow-cyan-500/20"
               size="lg"
             >
               Começar Agora

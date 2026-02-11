@@ -95,7 +95,7 @@ export const ProfessionalNav: React.FC<ProfessionalNavProps> = ({
               <div key={link.href} className="relative group">
                 <a
                   href={link.href}
-                  className="px-4 py-2 text-gray-700 hover:text-cyan-600 font-medium text-sm transition-colors duration-300 flex items-center gap-1"
+                  className="px-4 py-2 text-white hover:text-cyan-300 font-medium text-sm transition-colors duration-300 flex items-center gap-1"
                 >
                   {link.label}
                   {link.submenu && (
@@ -154,7 +154,7 @@ export const ProfessionalNav: React.FC<ProfessionalNavProps> = ({
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200 py-4 space-y-2 animate-slide-up">
+          <div className="md:hidden bg-slate-900/60 backdrop-blur-md border-t border-cyan-500/10 py-4 space-y-2 animate-slide-up">
             {links.map((link) => (
               <div key={link.href}>
                 <button
@@ -163,7 +163,7 @@ export const ProfessionalNav: React.FC<ProfessionalNavProps> = ({
                       openSubmenu === link.href ? null : link.href
                     )
                   }
-                  className="w-full text-left px-4 py-3 text-gray-900 hover:bg-gray-50 font-medium transition-colors duration-300 flex items-center justify-between"
+                  className="w-full text-left px-4 py-3 text-white hover:bg-slate-800/40 font-medium transition-colors duration-300 flex items-center justify-between"
                 >
                   {link.label}
                   {link.submenu && (
@@ -178,12 +178,12 @@ export const ProfessionalNav: React.FC<ProfessionalNavProps> = ({
 
                 {/* Mobile Submenu */}
                 {link.submenu && openSubmenu === link.href && (
-                  <div className="bg-gray-50">
+                  <div className="bg-slate-800/20">
                     {link.submenu.map((sublink) => (
                       <a
                         key={sublink.href}
                         href={sublink.href}
-                        className="block px-8 py-2 text-gray-700 hover:text-cyan-600 text-sm transition-colors duration-300"
+                        className="block px-8 py-2 text-white hover:text-cyan-300 text-sm transition-colors duration-300"
                       >
                         {sublink.label}
                       </a>
