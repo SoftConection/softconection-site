@@ -111,10 +111,12 @@ export default function LandingPage() {
   ];
 
   return (
-    <div className="w-full bg-slate-950 text-white relative">
-      {/* Hero Background Effects */}
-      <HeroBgEffects className="fixed top-0 left-0 right-0 h-screen pointer-events-none" />
+    <div className="w-full text-white relative min-h-screen overflow-hidden">
+      {/* Full Page Background Effects */}
+      <HeroBgEffects className="fixed inset-0 pointer-events-none" style={{height: '100%'}} />
       
+      {/* Content Container */}
+      <div className="relative z-10 w-full">
       {/* Navigation */}
       <div className="relative z-50">
       <ProfessionalNav
@@ -152,7 +154,7 @@ export default function LandingPage() {
       />
 
       {/* Locações */}
-      <section className="relative py-16 border-y border-cyan-500/20 bg-slate-900/50 backdrop-blur-sm">
+      <section className="relative py-16 border-y border-cyan-500/10 bg-transparent backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
@@ -167,7 +169,7 @@ export default function LandingPage() {
             {COMPANY_INFO.locations.map((loc) => (
               <div
                 key={loc.city}
-                className="p-8 rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-2 border-cyan-500/30 hover:border-cyan-500 transition-all hover:shadow-lg hover:shadow-cyan-500/20 text-center space-y-4 tech-fade"
+                className="p-8 rounded-2xl bg-gradient-to-br from-slate-800/40 to-slate-900/40 border-2 border-cyan-500/30 hover:border-cyan-500 hover:bg-slate-700/50 transition-all hover:shadow-lg hover:shadow-cyan-500/20 text-center space-y-4 tech-fade backdrop-blur-sm"
               >
                 <p className="text-4xl">{loc.flag}</p>
                 <h3 className="text-2xl font-display font-bold text-white">
@@ -181,13 +183,13 @@ export default function LandingPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="relative py-16 md:py-24 bg-gradient-to-b from-slate-900/30 to-slate-950 border-b border-cyan-500/10">
+      <section className="relative py-16 md:py-24 bg-transparent backdrop-blur-sm border-b border-cyan-500/10">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, idx) => {
               const StatIcon = stat.icon;
               return (
-                <div key={idx} className="text-center p-6 rounded-lg bg-slate-800/50 border border-cyan-500/20 hover:border-cyan-500/50 transition-all hover:shadow-lg hover:shadow-cyan-500/10">
+                <div key={idx} className="text-center p-6 rounded-lg bg-slate-800/40 border border-cyan-500/20 hover:border-cyan-500/50 hover:bg-slate-700/40 transition-all hover:shadow-lg hover:shadow-cyan-500/10 backdrop-blur-sm">
                   <div className="inline-flex justify-center mb-4">
                     <StatIcon className="w-8 h-8 text-cyan-400" />
                   </div>
@@ -205,7 +207,7 @@ export default function LandingPage() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="relative py-20 md:py-28 bg-slate-950 border-b border-cyan-500/10">
+      <section id="services" className="relative py-20 md:py-28 bg-transparent backdrop-blur-sm border-b border-cyan-500/10">
         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
@@ -245,13 +247,13 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 md:py-28 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+      <section id="features" className="py-20 md:py-28 bg-transparent backdrop-blur-sm border-b border-cyan-500/10">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
               Por Que Escolher a SoftConection
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-cyan-300/80">
               Qualidade, profissionalismo e dedicação em cada projeto
             </p>
           </div>
@@ -260,14 +262,14 @@ export default function LandingPage() {
             {features.map((feature) => {
               const FeatureIcon = feature.icon;
               return (
-                <div key={feature.shortKey} className="p-8 rounded-2xl bg-white border-2 border-gray-200 hover:border-cyan-500 transition-all hover:shadow-lg group">
-                  <div className="inline-flex p-3 rounded-lg bg-cyan-100 mb-4 group-hover:bg-cyan-500 group-hover:text-white transition-colors">
-                    <FeatureIcon className="w-6 h-6 text-cyan-600 group-hover:text-white" />
+                <div key={feature.shortKey} className="p-8 rounded-2xl bg-slate-800/40 border-2 border-cyan-500/30 hover:border-cyan-500 transition-all hover:shadow-lg hover:shadow-cyan-500/20 group backdrop-blur-sm">
+                  <div className="inline-flex p-3 rounded-lg bg-cyan-500/20 mb-4 group-hover:bg-cyan-500/40 transition-colors">
+                    <FeatureIcon className="w-6 h-6 text-cyan-400 group-hover:text-cyan-300" />
                   </div>
-                  <h3 className="text-lg font-display font-bold text-gray-900 mb-2">
+                  <h3 className="text-lg font-display font-bold text-white mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 text-sm">{feature.description}</p>
+                  <p className="text-cyan-300/70 text-sm">{feature.description}</p>
                 </div>
               );
             })}
@@ -276,15 +278,15 @@ export default function LandingPage() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 md:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+      <section id="about" className="py-20 md:py-28 bg-transparent backdrop-blur-sm border-b border-cyan-500/10">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Content */}
             <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900">
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-white">
                 Conhece a SoftConection
               </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <p className="text-lg text-cyan-300/80 leading-relaxed">
                 Desde {COMPANY_INFO.company.founded}, a SoftConection é referência no
                 mercado de TI. Oferecemos soluções inovadoras, personalizadas e
                 confiáveis para empresas de todos os tamanhos.
@@ -299,8 +301,8 @@ export default function LandingPage() {
                   "Garantia de satisfação 100%",
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{item}</span>
+                    <CheckCircle2 className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-cyan-300/80">{item}</span>
                   </div>
                 ))}
               </div>
@@ -317,14 +319,14 @@ export default function LandingPage() {
 
             {/* Image */}
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl opacity-10 blur-2xl"></div>
-              <div className="relative bg-gradient-to-br from-cyan-50 to-blue-50 p-8 md:p-12 rounded-2xl border-2 border-gray-200 flex items-center justify-center min-h-96">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl opacity-20 blur-2xl"></div>
+              <div className="relative bg-gradient-to-br from-slate-800/40 to-slate-900/40 p-8 md:p-12 rounded-2xl border-2 border-cyan-500/30 flex items-center justify-center min-h-96 backdrop-blur-sm">
                 <div className="text-center">
                   <p className="text-6xl mb-4">💻</p>
-                  <h3 className="text-2xl font-display font-bold text-gray-900 mb-2">
+                  <h3 className="text-2xl font-display font-bold text-white mb-2">
                     Soluções de TI Completas
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-cyan-300/70">
                     Desde infraestrutura até desenvolvimento de software
                   </p>
                 </div>
@@ -335,8 +337,8 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="py-20 md:py-28 bg-gradient-to-r from-cyan-600 to-blue-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 text-center space-y-8">
+      <section id="contact" className="py-20 md:py-28 bg-transparent backdrop-blur-sm border-b border-cyan-500/10 text-white">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 text-center space-y-8 relative z-10">
           <h2 className="text-4xl md:text-5xl font-display font-bold">
             Pronto para Transformar Seu Negócio?
           </h2>
@@ -400,6 +402,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      </div>
       </div>
 
       {/* Footer */}
