@@ -55,9 +55,7 @@ export const ProfessionalNav: React.FC<ProfessionalNavProps> = ({
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-white/90 backdrop-blur-xl border-b border-gray-200 shadow-sm"
-          : "bg-gradient-to-b from-slate-950/20 to-transparent backdrop-blur-sm border-b border-cyan-500/10",
+        "bg-slate-950/40 backdrop-blur-md border-b border-cyan-500/20",
         className
       )}
     >
