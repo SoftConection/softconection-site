@@ -153,8 +153,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   // Default: Centered
   return (
-    <section className={cn("relative min-h-screen flex items-center py-12 md:py-20", className)}>
-      <div className="absolute inset-0 bg-gradient-to-b from-cyan-50 to-blue-50 -z-10"></div>
+    <section className={cn("relative min-h-screen flex items-center py-12 md:py-20 bg-transparent backdrop-blur-sm", className)}>
 
       <div className={containerClass}>
         <div className="text-center space-y-8 max-w-3xl mx-auto">
@@ -165,12 +164,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           )}
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-gray-900 leading-tight">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white leading-tight">
             {title}
           </h1>
 
           {description && (
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">{description}</p>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">{description}</p>
           )}
 
           {/* Features Grid */}
@@ -178,8 +177,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
               {features.map((feature, idx) => (
                 <div key={idx} className="flex items-center justify-center gap-2">
-                  <Check className="w-5 h-5 text-green-500" />
-                  <span className="text-gray-700">{feature}</span>
+                  <Check className="w-5 h-5 text-cyan-400" />
+                  <span className="text-white/80">{feature}</span>
                 </div>
               ))}
             </div>
