@@ -171,13 +171,6 @@ const LoginContent: React.FC = () => {
             </a>
           </p>
         </Card>
-
-        {/* Demo Credentials */}
-        <div className="mt-6 p-4 rounded-lg bg-primary/10 border border-primary/20 backdrop-blur-sm">
-          <p className="text-xs font-medium text-foreground mb-2">🔓 Credenciais de Demo:</p>
-          <p className="text-xs text-muted-foreground">Email: admin@softconection.com</p>
-          <p className="text-xs text-muted-foreground">Senha: password</p>
-        </div>
       </div>
     </div>
   );
