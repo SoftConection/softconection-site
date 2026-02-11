@@ -160,7 +160,7 @@ export default function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
               Presente em Dois Continentes
             </h2>
-            <p className="text-cyan-300/80">
+            <p className="text-white/80">
               Atendimento profissional em Brasil e Angola
             </p>
           </div>
@@ -175,7 +175,7 @@ export default function LandingPage() {
                 <h3 className="text-2xl font-display font-bold text-white">
                   {loc.city}
                 </h3>
-                <p className="text-cyan-300/70">{loc.address}</p>
+                <p className="text-white/70">{loc.address}</p>
               </div>
             ))}
           </div>
@@ -193,10 +193,10 @@ export default function LandingPage() {
                   <div className="inline-flex justify-center mb-4">
                     <StatIcon className="w-8 h-8 text-cyan-400" />
                   </div>
-                  <p className="text-3xl md:text-4xl font-display font-bold text-cyan-300">
+                  <p className="text-3xl md:text-4xl font-display font-bold text-white">
                     {stat.value}
                   </p>
-                  <p className="text-sm md:text-base text-cyan-300/70 mt-2">
+                  <p className="text-sm md:text-base text-white/70 mt-2">
                     {stat.label}
                   </p>
                 </div>
@@ -213,7 +213,7 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
               Nossas Categorias de Serviços
             </h2>
-            <p className="text-xl text-cyan-200/70 max-w-3xl mx-auto">
+            <p className="text-xl text-white/70 max-w-3xl mx-auto">
               8 áreas de especialidade com mais de 48 serviços profissionais para
               atender todas as suas necessidades de TI
             </p>
@@ -253,7 +253,7 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
               Por Que Escolher a SoftConection
             </h2>
-            <p className="text-xl text-cyan-300/80">
+            <p className="text-xl text-white/80">
               Qualidade, profissionalismo e dedicação em cada projeto
             </p>
           </div>
@@ -269,7 +269,7 @@ export default function LandingPage() {
                   <h3 className="text-lg font-display font-bold text-white mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-cyan-300/70 text-sm">{feature.description}</p>
+                  <p className="text-white/70 text-sm">{feature.description}</p>
                 </div>
               );
             })}
@@ -286,7 +286,7 @@ export default function LandingPage() {
               <h2 className="text-4xl md:text-5xl font-display font-bold text-white">
                 Conhece a SoftConection
               </h2>
-              <p className="text-lg text-cyan-300/80 leading-relaxed">
+              <p className="text-lg text-white/80 leading-relaxed">
                 Desde {COMPANY_INFO.company.founded}, a SoftConection é referência no
                 mercado de TI. Oferecemos soluções inovadoras, personalizadas e
                 confiáveis para empresas de todos os tamanhos.
@@ -302,7 +302,7 @@ export default function LandingPage() {
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <CheckCircle2 className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-cyan-300/80">{item}</span>
+                    <span className="text-white/80">{item}</span>
                   </div>
                 ))}
               </div>
@@ -326,7 +326,7 @@ export default function LandingPage() {
                   <h3 className="text-2xl font-display font-bold text-white mb-2">
                     Soluções de TI Completas
                   </h3>
-                  <p className="text-cyan-300/70">
+                  <p className="text-white/70">
                     Desde infraestrutura até desenvolvimento de software
                   </p>
                 </div>
@@ -342,7 +342,7 @@ export default function LandingPage() {
           <h2 className="text-4xl md:text-5xl font-display font-bold">
             Pronto para Transformar Seu Negócio?
           </h2>
-          <p className="text-xl text-cyan-100 max-w-2xl mx-auto">
+          <p className="text-xl text-white/90 max-w-2xl mx-auto">
             Entre em contato com o nosso time agora mesmo e descubra como podemos
             ajudar sua empresa a crescer com tecnologia.
           </p>
@@ -372,7 +372,7 @@ export default function LandingPage() {
 
           {/* Contact Info */}
           <div className="pt-8 border-t border-white/20 space-y-4">
-            <p className="text-sm text-cyan-100">
+            <p className="text-sm text-white/80">
               Ou entre em contato conosco através dos seguintes canais:
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center text-sm">
