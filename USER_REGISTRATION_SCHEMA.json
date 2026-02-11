@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "title": "SoftConection - Sistema de Armazenamento de Usuários",
+  "description": "Este arquivo contém um registro de todos os usuários cadastrados no sistema. Os dados são salvos automaticamente quando um novo usuário se registra.",
+  "dataStructure": {
+    "users": [
+      {
+        "id": "guid_único",
+        "name": "Nome Completo",
+        "email": "email@example.com",
+        "phone": "+55 11 9XXXX-XXXX",
+        "accountType": "cliente | parceiro | colaborador",
+        "company": "Nome da Empresa (opcional para colaboradores)",
+        "avatar": "URL da avatar do usuário",
+        "createdAt": "ISO 8601 timestamp",
+        "updatedAt": "ISO 8601 timestamp",
+        "verified": false
+      }
+    ],
+    "sessions": [
+      {
+        "userId": "guid_único",
+        "loginTime": "ISO 8601 timestamp",
+        "logoutTime": "ISO 8601 timestamp ou null",
+        "ipAddress": "IP da sessão",
+        "userAgent": "navegador e SO"
+      }
+    ],
+    "activities": [
+      {
+        "id": "guid_único",
+        "userId": "guid_único",
+        "type": "registration | login | logout | profile_update | service_request",
+        "description": "Descrição da atividade",
+        "timestamp": "ISO 8601 timestamp"
+      }
+    ],
+    "contacts": [
+      {
+        "id": "guid_único",
+        "userId": "guid_único",
+        "subject": "Assunto do contato",
+        "message": "Mensagem enviada",
+        "status": "pendente | respondido",
+        "createdAt": "ISO 8601 timestamp"
+      }
+    ]
+  },
+  "accountTypes": {
+    "cliente": {
+      "description": "Usuários que contratam serviços",
+      "features": [
+        "Agendar serviços",
+        "Solicitar suporte técnico",
+        "Acompanhar pedidos",
+        "Histórico de serviços completados",
+        "Chat suporte 24/7"
+      ],
+      "permissions": ["view_own_profile", "request_services", "manage_appointments", "view_orders"]
+    },
+    "parceiro": {
+      "description": "Empresas parceiras que colaboram com SoftConection",
+      "features": [
+        "Propostas de parceria",
+        "Acesso exclusivo a oportunidades",
+        "Dashboard de parceiros",
+        "Benefícios especiais",
+        "Relatórios de colaboração"
+      ],
+      "permissions": ["view_own_profile", "view_partnerships", "create_proposals", "manage_partnership"]
+    },
+    "colaborador": {
+      "description": "Membros da equipe SoftConection",
+      "features": [
+        "Dashboard de trabalho completo",
+        "Gerenciar atividades e tarefas",
+        "Acessar comunidade interna",
+        "Visualizar projetos",
+        "Registrar horas de trabalho"
+      ],
+      "permissions": ["view_all_activities", "manage_tasks", "view_projects", "manage_team"]
+    }
+  },
+  "fieldsRequired": [
+    "name - Obrigatório",
+    "email - Obrigatório e único",
+    "phone - Obrigatório",
+    "accountType - Obrigatório (cliente | parceiro | colaborador)",
+    "company - Opcional, recomendado para clientes e parceiros",
+    "password - Obrigatório, criptografado antes de salvar"
+  ],
+  "backupInstructions": {
+    "automatic": "Os dados são salvos automaticamente em localStorage e podem ser acessados via localStorage['sc_users']",
+    "manual_export": "Utilize a função UserStorageService.exportData() para fazer download de um backup JSON",
+    "restoration": "Para restaurar dados, importe o arquivo JSON através da função de importação (em desenvolvimento)"
+  },
+  "securityNotes": [
+    "As senhas devem ser criptografadas antes de serem salvas",
+    "Os dados de localStorage são apenas para desenvolvimento/demo",
+    "Em produção, use um banco de dados seguro e autenticação JWT",
+    "Implemente GDPR compliance para armazenamento de dados pessoais"
+  ],
+  "timestamp": "2026-02-11T00:00:00Z"
+}

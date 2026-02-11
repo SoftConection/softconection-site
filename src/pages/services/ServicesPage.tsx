@@ -3,10 +3,32 @@ import { useNavigate } from "react-router-dom";
 import { useData } from "@/contexts/DataContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { AppLayout } from "@/components/AppLayout";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, ArrowRight } from "lucide-react";
+import ComingSoon from "@/components/ComingSoon";
+import { Zap } from "lucide-react";
 
+export const ServicesPage: React.FC = () => {
+  return (
+    <AppLayout>
+      <ComingSoon
+        title="Centro de Serviços"
+        description="Aqui você poderá visualizar todos os serviços disponibilizados pela SoftConection e solicitar orçamentos personalizados."
+        features={[
+          "Catálogo completo de serviços",
+          "Solicitação de orçamentos",
+          "Acompanhamento em tempo real",
+          "Chat com especialistas",
+          "Histórico de serviços contratados",
+        ]}
+        icon={<Zap className="w-12 h-12" />}
+        ctaText="Voltar ao Dashboard"
+      />
+    </AppLayout>
+  );
+};
+
+export default ServicesPage;
+
+/* ==================== CÓDIGO FUTURO ==================== 
 const CATEGORIES_DATA = [
   {
     id: "repair",
@@ -160,12 +182,7 @@ export const ServicesPage: React.FC = () => {
         </div>
       )}
 
-      {/* Info Section */}
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-          <div className="text-3xl mb-3">📊</div>
-          <h3 className="font-display font-bold text-white mb-2">48+ Serviços</h3>
-          <p className="text-sm text-gray-400">
+
             Ampla variedade de serviços em 8 áreas diferentes
           </p>
         </div>

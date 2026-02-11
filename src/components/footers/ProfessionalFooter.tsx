@@ -157,10 +157,7 @@ export const ProfessionalFooter: React.FC<ProfessionalFooterProps> = ({
             {/* Brand */}
             <div className="space-y-4 md:col-span-1">
               <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
-                  <Cpu className="w-6 h-6 text-white" />
-                </div>
-                <span className="font-display font-bold text-white">SC</span>
+                <img src={logo} alt="SoftConection" className="h-12 w-auto" />
               </div>
               <p className="text-sm text-gray-400">
                 {COMPANY_INFO.description}
@@ -204,7 +201,7 @@ export const ProfessionalFooter: React.FC<ProfessionalFooterProps> = ({
             <h3 className="font-display font-bold text-white mb-6 text-sm uppercase tracking-wide">
               Entre em Contato
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {/* Email */}
               <a
                 href={`mailto:${COMPANY_INFO.contact.email}`}
@@ -243,7 +240,7 @@ export const ProfessionalFooter: React.FC<ProfessionalFooterProps> = ({
                 </div>
               </a>
 
-              {/* WhatsApp */}
+              {/* WhatsApp Brasil */}
               <a
                 href={`https://wa.me/${COMPANY_INFO.contact.whatsapp}`}
                 target="_blank"
@@ -257,9 +254,30 @@ export const ProfessionalFooter: React.FC<ProfessionalFooterProps> = ({
                   </div>
                   <div>
                     <p className="text-xs uppercase tracking-wide text-gray-400 group-hover:text-green-400 transition-colors">
-                      WhatsApp
+                      WhatsApp 🇧🇷
                     </p>
                     <p className="text-sm font-medium">{COMPANY_INFO.contact.phone}</p>
+                  </div>
+                </div>
+              </a>
+
+              {/* WhatsApp Angola */}
+              <a
+                href={`https://wa.me/${COMPANY_INFO.contact.whatsappAngola}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative overflow-hidden rounded-xl p-4 bg-slate-900/50 border border-slate-800 hover:border-amber-500/50 transition-all duration-300"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-amber-500/10 group-hover:bg-amber-500/20 transition-colors">
+                    <Phone className="w-5 h-5 text-amber-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-gray-400 group-hover:text-amber-400 transition-colors">
+                      Telefone 🇦🇴
+                    </p>
+                    <p className="text-sm font-medium">{COMPANY_INFO.contact.phoneAngola}</p>
                   </div>
                 </div>
               </a>

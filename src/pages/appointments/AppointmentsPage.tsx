@@ -2,6 +2,35 @@ import React, { useState } from "react";
 import { useData } from "@/contexts/DataContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { AppLayout } from "@/components/AppLayout";
+import ComingSoon from "@/components/ComingSoon";
+import { Calendar } from "lucide-react";
+
+export const AppointmentsPage: React.FC = () => {
+  return (
+    <AppLayout>
+      <ComingSoon
+        title="Agenda de Atendimentos"
+        description="Gerencie seus agendamentos e consulte a disponibilidade dos nossos profissionais."
+        features={[
+          "Visualizar calendário de disponibilidade",
+          "Agendar novos atendimentos",
+          "Confirmar agendamentos existentes",
+          "Receber lembretes automáticos",
+          "Histórico de atendimentos realizados",
+        ]}
+        icon={<Calendar className="w-12 h-12" />}
+        ctaText="Voltar ao Dashboard"
+      />
+    </AppLayout>
+  );
+};
+
+export default AppointmentsPage;
+
+/* ==================== CÓDIGO FUTURO ====================
+import { useData } from "@/contexts/DataContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { AppLayout } from "@/components/AppLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,19 +52,7 @@ import {
   Search,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-
-const statusConfig: Record<string, { color: string; label: string }> = {
-  scheduled: { color: "bg-blue-500/10 text-blue-500", label: "Agendado" },
-  confirmed: { color: "bg-green-500/10 text-green-500", label: "Confirmado" },
-  "in-progress": { color: "bg-yellow-500/10 text-yellow-500", label: "Em Andamento" },
-  completed: { color: "bg-green-600/10 text-green-600", label: "Completado" },
-  cancelled: { color: "bg-red-500/10 text-red-500", label: "Cancelado" },
-};
-
-export const AppointmentsPage: React.FC = () => {
-  const { appointments, services } = useData();
-  const { user } = useAuth();
+import { toast } from "sonner";*/
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
 
