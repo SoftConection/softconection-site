@@ -4,10 +4,7 @@ import { AppLayout } from '@/components/AppLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Search, Clock, DollarSign, CheckCircle2, ShoppingCart } from 'lucide-react';
-import { useData } from '@/contexts/DataContext';
-import { Service } from '@/types';
 
 const CATEGORIES = {
   repair: {
@@ -452,12 +449,13 @@ const CATEGORIES = {
   },
 };
 
+type CategoryService = (typeof CATEGORIES)[keyof typeof CATEGORIES]['services'][number];
+
 export function CategoryPage() {
   const { categoryId } = useParams<{ categoryId: string }>();
   const navigate = useNavigate();
-  const [selectedService, setSelectedService] = useState<any>(null);
+  const [selectedService, setSelectedService] = useState<CategoryService | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const { addAppointment } = useData();
 
   const category = CATEGORIES[categoryId as keyof typeof CATEGORIES];
 

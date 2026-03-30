@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import {
+  GoogleLogin,
+  GoogleOAuthProvider,
+  type CredentialResponse,
+} from "@react-oauth/google";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
+import { extractGoogleUserData } from "@/lib/googleAuth";
+import { Logo } from "@/components/branding/Logo";
 
-const LoginContent: React.FC = () => {
+const LoginContent: React.FC<{ googleEnabled?: boolean }> = ({
+  googleEnabled = true,
+}) => {
   const [email, setEmail] = useState("admin@softconection.com");
   const [password, setPassword] = useState("password");
   const [isLoading, setIsLoading] = useState(false);
@@ -30,27 +38,16 @@ const LoginContent: React.FC = () => {
     }
   };
 
-  const handleGoogleSuccess = (credentialResponse: any) => {
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     try {
-      // Decodificar o JWT token
-      const token = credentialResponse.credential;
-      const decoded = JSON.parse(atob(token.split(".")[1]));
+      const userData = extractGoogleUserData(credentialResponse);
+      if (!userData) {
+        toast.error("Não foi possível validar os dados da conta Google");
+        return;
+      }
 
-      // Armazenar informações do usuário
-      const userData = {
-        id: decoded.sub,
-        name: decoded.name,
-        email: decoded.email,
-        picture: decoded.picture,
-        verified: decoded.email_verified,
-      };
-
-      // Armazenar no localStorage
-      localStorage.setItem("google_auth_token", token);
-      localStorage.setItem("user_data", JSON.stringify(userData));
-
-      // Executar login
-      login(userData);
+      // Executar login com payload sanitizado
+      await login(userData);
 
       // Redirecionar para dashboard
       toast.success("Bem-vindo ao SoftConection!");
@@ -78,10 +75,9 @@ const LoginContent: React.FC = () => {
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-2xl mx-auto mb-4">
-            <span className="text-white font-display font-bold text-2xl">SC</span>
+          <div className="flex justify-center mb-3">
+            <Logo size="large" animated className="drop-shadow-md" />
           </div>
-          <h1 className="text-3xl font-display font-bold mb-2">SoftConection</h1>
           <p className="text-muted-foreground">Soluções Profissionais de TI</p>
         </div>
 
@@ -154,13 +150,20 @@ const LoginContent: React.FC = () => {
 
           {/* Google Login */}
           <div className="flex justify-center">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              text="signin"
-              size="large"
-              locale="pt_BR"
-            />
+            {googleEnabled ? (
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                text="signin"
+                size="large"
+                locale="pt_BR"
+              />
+            ) : (
+              <p className="text-xs text-muted-foreground text-center">
+                Login com Google indisponível: configure
+                {" "}VITE_GOOGLE_CLIENT_ID no ambiente.
+              </p>
+            )}
           </div>
 
           {/* Sign Up Link */}
@@ -177,12 +180,15 @@ const LoginContent: React.FC = () => {
 };
 
 export const LoginPage: React.FC = () => {
-  const googleClientId =
-    "769154537622-meid4vk2fb5rsmip5oh59kpc5m7jco6l.apps.googleusercontent.com";
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  if (!googleClientId) {
+    return <LoginContent googleEnabled={false} />;
+  }
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
-      <LoginContent />
+      <LoginContent googleEnabled />
     </GoogleOAuthProvider>
   );
 };

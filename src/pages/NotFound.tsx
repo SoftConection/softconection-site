@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { AlertTriangle, Home, ArrowRight, MessageSquare, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo.png";
+import { Logo } from "@/components/branding/Logo";
 
 const NotFound = () => {
   const location = useLocation();
@@ -25,7 +25,7 @@ const NotFound = () => {
       <div className="relative w-full max-w-2xl">
         {/* Header com Logo */}
         <div className="mb-12 flex justify-center">
-          <img src={logo} alt="SoftConection" className="h-12 w-auto brightness-110" />
+          <Logo size="medium" animated showWordmark={false} className="brightness-110" />
         </div>
 
         {/* Main Content */}

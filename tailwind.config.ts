@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -14,8 +15,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        display: ['Sora', 'Manrope', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -98,14 +99,29 @@ export default {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        "glow-pulse": {
+          "0%, 100%": { "box-shadow": "0 0 20px -8px rgba(0,211,255,0.4)" },
+          "50%":       { "box-shadow": "0 0 40px -8px rgba(0,211,255,0.7)" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%":       { transform: "translateY(-10px)" },
+        },
+        "slide-up": {
+          "from": { opacity: "0", transform: "translateY(28px)" },
+          "to":   { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 0.5s ease-out forwards",
         "fade-in": "fade-in 0.5s ease-out forwards",
+        "glow-pulse": "glow-pulse 2.5s ease-in-out infinite",
+        "float": "float 7s ease-in-out infinite",
+        "slide-up": "slide-up 0.6s ease-out forwards",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

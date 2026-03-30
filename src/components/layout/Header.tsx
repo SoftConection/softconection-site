@@ -3,11 +3,11 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Bell, Search, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export const Header: React.FC = () => {
   const { user } = useAuth();
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="fixed md:fixed top-0 md:left-64 right-0 h-16 md:h-16 bg-card/80 backdrop-blur-xl border-b border-border/30 z-30">
@@ -27,12 +27,20 @@ export const Header: React.FC = () => {
         {/* Right Section */}
         <div className="flex items-center gap-2 md:gap-4">
           {/* Search Mobile */}
-          <button className="md:hidden p-2 hover:bg-secondary rounded-lg transition-colors">
+          <button
+            className="md:hidden p-2 hover:bg-secondary rounded-lg transition-colors"
+            aria-label="Abrir busca"
+            title="Buscar"
+          >
             <Search className="w-5 h-5" />
           </button>
 
           {/* Notifications */}
-          <button className="relative p-2 hover:bg-secondary rounded-lg transition-colors">
+          <button
+            className="relative p-2 hover:bg-secondary rounded-lg transition-colors"
+            aria-label="Notificações"
+            title="Notificações"
+          >
             <Bell className="w-5 h-5" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
           </button>
@@ -42,7 +50,9 @@ export const Header: React.FC = () => {
             variant="ghost"
             size="icon"
             className="h-9 w-9"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={toggleTheme}
+            aria-label="Alternar tema"
+            title="Alternar tema"
           >
             {theme === "dark" ? (
               <Sun className="w-5 h-5" />

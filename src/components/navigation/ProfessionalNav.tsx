@@ -1,17 +1,17 @@
 /**
- * Componente de Navegação Profissional para SoftConection
- * Header responsivo com menu mobile e theme switcher
+ * Navegação Premium — SoftConection
+ * Glass morphism • scroll-aware • responsive
  */
 
 import React, { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/branding/Logo";
 
 interface NavLink {
   label: string;
   href: string;
-  submenu?: NavLink[];
 }
 
 interface ProfessionalNavProps {
@@ -29,182 +29,140 @@ interface ProfessionalNavProps {
 export const ProfessionalNav: React.FC<ProfessionalNavProps> = ({
   logo: logoUrl = logo,
   links = [
-    { label: "Início", href: "#" },
-    { label: "Serviços", href: "#services" },
-    { label: "Sobre", href: "#about" },
-    { label: "Contato", href: "#contact" },
+    { label: "Início",    href: "#" },
+    { label: "Serviços",  href: "#services" },
+    { label: "Sobre",     href: "#about" },
+    { label: "Contato",   href: "#contact" },
   ],
   onLogoClick,
   cta,
   className,
 }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled]       = useState(false);
+  const [isMobileMenuOpen, setIsMobile]   = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close mobile menu on resize
+  useEffect(() => {
+    const onResize = () => { if (window.innerWidth >= 768) setIsMobile(false); };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const isDefaultLogo = logoUrl === logo;
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        "bg-slate-950/40 backdrop-blur-md border-b border-cyan-500/20",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        isScrolled
+          ? "py-0 bg-[hsl(222_24%_5%/0.85)] backdrop-blur-xl border-b border-white/[0.07] shadow-[0_1px_0_0_rgba(255,255,255,0.05)]"
+          : "py-0 bg-transparent",
         className
       )}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-        <nav className="flex items-center justify-between h-24 md:h-20">
-          {/* Logo */}
-          <div className="flex items-center">
-            <button
-              onClick={onLogoClick}
-              className="flex items-center gap-3 hover:opacity-90 transition-opacity group"
-            >
+        <nav className="flex items-center justify-between h-20">
+
+          {/* ── Logo ─────────────────────────────────────── */}
+          <button
+            onClick={onLogoClick}
+            className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 rounded-lg"
+            aria-label="SoftConection — página inicial"
+          >
+            {isDefaultLogo ? (
+              <Logo size={isScrolled ? "small" : "medium"} animated showWordmark={false} />
+            ) : (
               <img
                 src={logoUrl}
                 alt="SoftConection"
                 className={cn(
-                  "transition-all duration-300 drop-shadow-lg group-hover:drop-shadow-2xl filter brightness-110",
-                  isScrolled ? "h-12 md:h-10" : "h-20 md:h-16"
+                  "transition-all duration-400 w-auto",
+                  isScrolled
+                    ? "h-9 drop-shadow-none"
+                    : "h-12 drop-shadow-[0_0_18px_rgba(0,211,255,0.45)]"
                 )}
-                style={{
-                  filter: isScrolled ? "drop-shadow(0 4px 8px rgba(0,0,0,0.15))" : "drop-shadow(0 0 20px rgba(0,217,255,0.4)) drop-shadow(0 4px 12px rgba(0,0,0,0.3))",
-                }}
               />
-              <span className={cn(
-                "font-bold transition-all duration-300 hidden sm:inline whitespace-nowrap",
-                isScrolled 
-                  ? "text-lg text-gray-900" 
-                  : "text-2xl bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
-              )}>
-                SoftConection
-              </span>
-            </button>
-          </div>
+            )}
+            <span
+              className={cn(
+                "hidden sm:inline font-display font-bold tracking-tight transition-all duration-400",
+                isScrolled ? "text-base text-foreground/90" : "text-xl gradient-text"
+              )}
+            >
+              SoftConection
+            </span>
+          </button>
 
-          {/* Desktop Navigation */}
+          {/* ── Desktop Links ─────────────────────────────── */}
           <div className="hidden md:flex items-center gap-1">
             {links.map((link) => (
-              <div key={link.href} className="relative group">
-                <a
-                  href={link.href}
-                  className="px-4 py-2 text-white hover:text-cyan-300 font-medium text-sm transition-colors duration-300 flex items-center gap-1"
-                >
-                  {link.label}
-                  {link.submenu && (
-                    <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform" />
-                  )}
-                </a>
-
-                {/* Submenu */}
-                {link.submenu && (
-                  <div className="absolute left-0 mt-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 top-full pt-2">
-                    {link.submenu.map((sublink) => (
-                      <a
-                        key={sublink.href}
-                        href={sublink.href}
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-cyan-600 text-sm transition-colors duration-300 first:rounded-t-lg last:rounded-b-lg"
-                      >
-                        {sublink.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <a
+                key={link.href}
+                href={link.href}
+                className="relative px-4 py-2 text-sm font-medium text-foreground/65 hover:text-foreground transition-colors duration-200 group rounded-lg hover:bg-white/[0.05]"
+              >
+                {link.label}
+                <span className="absolute bottom-1.5 left-4 right-4 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+              </a>
             ))}
           </div>
 
-          {/* CTA & Mobile Menu */}
+          {/* ── CTA + Mobile Toggle ───────────────────────── */}
           <div className="flex items-center gap-3">
             {cta && (
               <button
                 onClick={cta.onClick}
                 className={cn(
-                  "px-6 py-2 rounded-lg font-medium text-sm transition-all duration-300 hidden md:block",
+                  "hidden md:inline-flex items-center gap-1.5 text-sm font-semibold transition-all duration-300",
                   cta.variant === "primary"
-                    ? "bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl"
-                    : "border border-gray-300 text-gray-900 hover:bg-gray-50"
+                    ? "btn-primary"
+                    : "btn-secondary"
                 )}
               >
                 {cta.label}
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             )}
 
-            {/* Mobile Menu Button */}
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
-              aria-label="Toggle menu"
+              onClick={() => setIsMobile(!isMobileMenuOpen)}
+              className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg text-foreground/70 hover:text-foreground hover:bg-white/[0.07] transition-colors"
+              aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </nav>
 
-        {/* Mobile Navigation */}
+        {/* ── Mobile Menu ──────────────────────────────────── */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-slate-900/60 backdrop-blur-md border-t border-cyan-500/10 py-4 space-y-2 animate-slide-up">
+          <div className="md:hidden border-t border-white/[0.07] py-4 space-y-1 animate-slide-up">
             {links.map((link) => (
-              <div key={link.href}>
-                <button
-                  onClick={() =>
-                    setOpenSubmenu(
-                      openSubmenu === link.href ? null : link.href
-                    )
-                  }
-                  className="w-full text-left px-4 py-3 text-white hover:bg-slate-800/40 font-medium transition-colors duration-300 flex items-center justify-between"
-                >
-                  {link.label}
-                  {link.submenu && (
-                    <ChevronDown
-                      className={cn(
-                        "w-4 h-4 transition-transform",
-                        openSubmenu === link.href && "rotate-180"
-                      )}
-                    />
-                  )}
-                </button>
-
-                {/* Mobile Submenu */}
-                {link.submenu && openSubmenu === link.href && (
-                  <div className="bg-slate-800/20">
-                    {link.submenu.map((sublink) => (
-                      <a
-                        key={sublink.href}
-                        href={sublink.href}
-                        className="block px-8 py-2 text-white hover:text-cyan-300 text-sm transition-colors duration-300"
-                      >
-                        {sublink.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {cta && (
-              <button
-                onClick={cta.onClick}
-                className={cn(
-                  "w-full px-6 py-3 rounded-lg font-medium text-sm transition-all duration-300 mx-4 my-2",
-                  cta.variant === "primary"
-                    ? "bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white shadow-lg"
-                    : "border border-gray-300 text-gray-900 hover:bg-gray-50"
-                )}
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMobile(false)}
+                className="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium text-foreground/70 hover:text-foreground hover:bg-white/[0.06] transition-colors"
               >
-                {cta.label}
-              </button>
+                {link.label}
+              </a>
+            ))}
+            {cta && (
+              <div className="pt-3 border-t border-white/[0.06]">
+                <button
+                  onClick={() => { cta.onClick(); setIsMobile(false); }}
+                  className="btn-primary w-full justify-center"
+                >
+                  {cta.label}
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             )}
           </div>
         )}

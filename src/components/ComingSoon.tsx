@@ -86,8 +86,7 @@ export const ComingSoon: React.FC<ComingSoonProps> = ({
           {/* Progress Indicator */}
           <div className="space-y-2">
             <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
-              <div className="h-full w-60% bg-gradient-to-r from-cyan-500 to-blue-500 animate-pulse rounded-full" 
-                   style={{ width: "60%" }} />
+              <div className="h-full w-3/5 bg-gradient-to-r from-cyan-500 to-blue-500 animate-pulse rounded-full" />
             </div>
             <p className="text-sm text-gray-400">
               60% de conclusão | Entrega prevista em breve

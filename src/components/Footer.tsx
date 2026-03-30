@@ -1,5 +1,5 @@
-import logo from "@/assets/logo.png";
 import { MessageCircle, MapPin } from "lucide-react";
+import { Logo } from "@/components/branding/Logo";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -28,7 +28,9 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Logo & Company Info */}
           <div className="flex flex-col">
-            <img src={logo} alt="Softconection" className="h-10 w-auto mb-3" />
+            <div className="mb-3">
+              <Logo size="small" animated showWordmark={false} />
+            </div>
             <p className="text-muted-foreground text-sm">
               Soluções de TI Profissionais
             </p>

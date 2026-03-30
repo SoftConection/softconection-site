@@ -1,20 +1,31 @@
-// Auth Types
+// Import platform types
+export * from './platform';
+
+// Legacy Auth Types (deprecated - use platform.ts)
 export interface User {
   id: string;
   name: string;
   email: string;
-  role: "admin" | "manager" | "technician" | "client";
+  role: "admin" | "manager" | "technician" | "client" | "partner" | "investor";
   avatar?: string;
   company?: string;
   phone?: string;
   createdAt: Date;
 }
 
+export interface OAuthUserData {
+  id: string;
+  name: string;
+  email: string;
+  picture?: string;
+  verified?: boolean;
+}
+
 export interface AuthContext {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (credentials: string | OAuthUserData, password?: string) => Promise<void>;
   logout: () => void;
   register: (data: RegisterData) => Promise<void>;
 }
@@ -25,6 +36,7 @@ export interface RegisterData {
   password: string;
   company?: string;
   phone?: string;
+  role?: User["role"];
 }
 
 // Service Categories & Types
@@ -57,6 +69,33 @@ export interface Service {
   image?: string;
   features: string[];
   isActive: boolean;
+  billingSupports?: {
+    proforma: boolean;
+    realInvoice: boolean;
+  };
+  adminPublishedAt?: Date;
+  adminPublishedBy?: string;
+}
+
+export type BrandedInvoiceType = "proforma" | "real";
+
+export interface BrandedInvoice {
+  id: string;
+  type: BrandedInvoiceType;
+  serviceId: string;
+  serviceName: string;
+  customerName: string;
+  customerEmail: string;
+  issuerName: string;
+  issuerTaxId?: string;
+  amount: number;
+  currency: "AOA" | "BRL" | "USD";
+  serviceMinutes: number;
+  status: "issued" | "paid";
+  documentNumber: string;
+  issueDate: Date;
+  dueDate?: Date;
+  notes?: string;
 }
 
 export interface ServiceRequest {

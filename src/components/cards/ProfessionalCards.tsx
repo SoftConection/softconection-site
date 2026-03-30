@@ -1,11 +1,13 @@
 /**
- * Componentes de Cartão Profissional para SoftConection
- * Segue a identidade visual e branding da empresa
+ * Componentes de Cartão Premium — SoftConection
+ * Glass morphism • gradient borders • hover glow
  */
 
 import React from "react";
+import { ArrowRight, TrendingUp, TrendingDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+/* ─── Base Glass Card ─────────────────────────────────── */
 interface ProfessionalCardProps {
   children: React.ReactNode;
   className?: string;
@@ -17,24 +19,14 @@ interface ProfessionalCardProps {
 export const ProfessionalCard: React.FC<ProfessionalCardProps> = ({
   children,
   className,
-  variant = "default",
   hover = true,
   onClick,
 }) => {
-  const variantStyles = {
-    default:
-      "bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-slate-800 dark:border-cyan-500/20",
-    elevated:
-      "bg-white border border-gray-100 rounded-xl shadow-md dark:bg-slate-800 dark:border-cyan-500/30",
-    gradient:
-      "bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl shadow-sm dark:from-slate-800 dark:to-slate-900 dark:border-cyan-500/20",
-  };
-
   return (
     <div
       className={cn(
-        variantStyles[variant],
-        hover && "hover:shadow-lg transition-shadow duration-300 cursor-pointer",
+        "glass-card",
+        hover && "glass-card-hover cursor-pointer",
         className
       )}
       onClick={onClick}
@@ -44,6 +36,7 @@ export const ProfessionalCard: React.FC<ProfessionalCardProps> = ({
   );
 };
 
+/* ─── Service Card ────────────────────────────────────── */
 interface ServiceCardProps {
   icon: React.ReactNode;
   title: string;
@@ -60,40 +53,51 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   onClick,
 }) => {
   return (
-    <ProfessionalCard
-      variant="default"
+    <div
+      className={cn(
+        "group relative p-6 rounded-xl cursor-pointer overflow-hidden",
+        "transition-all duration-300",
+        "bg-white/[0.04] border border-white/[0.08]",
+        "hover:bg-white/[0.07] hover:border-primary/25",
+        "hover:shadow-[0_8px_32px_-8px_rgba(0,211,255,0.18),0_0_0_1px_rgba(0,211,255,0.10)]",
+        "hover:-translate-y-1"
+      )}
       onClick={onClick}
-      className="p-6 group"
     >
-      <div className="space-y-4">
-        {/* Icon Container */}
-        <div className="inline-flex p-3 rounded-lg bg-cyan-50 group-hover:bg-cyan-100 transition-colors duration-300 dark:bg-cyan-500/10 dark:group-hover:bg-cyan-500/20">
-          {icon}
-        </div>
+      {/* Top accent line — appears on hover */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        {/* Content */}
-        <div className="space-y-2">
-          <h3 className="font-display font-bold text-lg text-gray-900 dark:text-white">
-            {title}
-          </h3>
-          <p className="text-sm text-gray-600 dark:text-cyan-300/70">{description}</p>
-        </div>
-
-        {/* Action */}
-        {action && <div className="pt-2">{action}</div>}
+      {/* Icon */}
+      <div className="inline-flex p-3 rounded-xl mb-5 transition-all duration-300 bg-gradient-to-br from-primary/15 to-accent/10 group-hover:from-primary/25 group-hover:to-accent/20 border border-primary/10 group-hover:border-primary/25">
+        {icon}
       </div>
-    </ProfessionalCard>
+
+      {/* Content */}
+      <h3 className="font-display font-semibold text-base text-foreground mb-2 leading-snug">
+        {title}
+      </h3>
+      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+        {description}
+      </p>
+
+      {/* CTA */}
+      {action ? (
+        <div>{action}</div>
+      ) : (
+        <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1">
+          Explorar <ArrowRight className="w-3 h-3" />
+        </span>
+      )}
+    </div>
   );
 };
 
+/* ─── Stat Card ───────────────────────────────────────── */
 interface StatCardProps {
   label: string;
   value: string;
   icon?: React.ReactNode;
-  change?: {
-    value: number;
-    direction: "up" | "down";
-  };
+  change?: { value: number; direction: "up" | "down" };
 }
 
 export const StatCard: React.FC<StatCardProps> = ({
@@ -103,104 +107,36 @@ export const StatCard: React.FC<StatCardProps> = ({
   change,
 }) => {
   return (
-    <ProfessionalCard variant="elevated" className="p-6">
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-gray-600">{label}</p>
-          {icon && <div className="text-cyan-500">{icon}</div>}
-        </div>
-
-        <div className="flex items-baseline gap-2">
-          <p className="text-2xl font-display font-bold text-gray-900">
-            {value}
-          </p>
-          {change && (
-            <span
-              className={`text-xs font-semibold ${
-                change.direction === "up"
-                  ? "text-green-600"
-                  : "text-red-600"
-              }`}
-            >
-              {change.direction === "up" ? "↑" : "↓"} {change.value}%
-            </span>
-          )}
-        </div>
+    <div className="glass-card p-6 space-y-3">
+      <div className="flex items-center justify-between">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          {label}
+        </p>
+        {icon && (
+          <div className="p-2 rounded-lg bg-primary/10 text-primary">{icon}</div>
+        )}
       </div>
-    </ProfessionalCard>
-  );
-};
 
-interface TestimonialCardProps {
-  quote: string;
-  author: string;
-  role: string;
-  avatar?: string;
-}
-
-export const TestimonialCard: React.FC<TestimonialCardProps> = ({
-  quote,
-  author,
-  role,
-  avatar,
-}) => {
-  return (
-    <ProfessionalCard variant="gradient" className="p-6">
-      <div className="space-y-4">
-        {/* Rating */}
-        <div className="flex gap-1">
-          {[...Array(5)].map((_, i) => (
-            <span key={i} className="text-amber-400">
-              ★
-            </span>
-          ))}
-        </div>
-
-        {/* Quote */}
-        <p className="text-gray-700 font-medium italic">"{quote}"</p>
-
-        {/* Author */}
-        <div className="flex items-center gap-3 pt-2">
-          {avatar && (
-            <img
-              src={avatar}
-              alt={author}
-              className="w-10 h-10 rounded-full object-cover"
-            />
-          )}
-          <div>
-            <p className="font-semibold text-gray-900">{author}</p>
-            <p className="text-xs text-gray-600">{role}</p>
-          </div>
-        </div>
+      <div className="flex items-baseline gap-2">
+        <p className="text-3xl font-display font-bold tracking-tight gradient-text">
+          {value}
+        </p>
+        {change && (
+          <span
+            className={cn(
+              "inline-flex items-center gap-0.5 text-xs font-semibold",
+              change.direction === "up" ? "text-emerald-400" : "text-red-400"
+            )}
+          >
+            {change.direction === "up" ? (
+              <TrendingUp className="w-3 h-3" />
+            ) : (
+              <TrendingDown className="w-3 h-3" />
+            )}
+            {change.value}%
+          </span>
+        )}
       </div>
-    </ProfessionalCard>
-  );
-};
-
-interface FeatureCardProps {
-  number: number;
-  title: string;
-  description: string;
-}
-
-export const FeatureCard: React.FC<FeatureCardProps> = ({
-  number,
-  title,
-  description,
-}) => {
-  return (
-    <ProfessionalCard variant="default" className="p-6">
-      <div className="space-y-4">
-        <div className="inline-flex w-12 h-12 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-100 to-blue-100 text-cyan-600 font-display font-bold text-lg">
-          {number}
-        </div>
-
-        <div>
-          <h3 className="font-display font-bold text-gray-900">{title}</h3>
-          <p className="text-sm text-gray-600 mt-1">{description}</p>
-        </div>
-      </div>
-    </ProfessionalCard>
+    </div>
   );
 };

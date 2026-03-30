@@ -23,4 +23,19 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": "off",
     },
   },
+  // Arquivos gerados pelo shadcn/ui — padrão de export de constantes é intencional
+  {
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: {
+      "react-refresh/only-export-components": "off",
+    },
+  },
+  // Contextos React — padrão Provider + hook/função no mesmo arquivo é intencional
+  {
+    files: ["src/contexts/**/*.{ts,tsx}"],
+    rules: {
+      "react-refresh/only-export-components": "off",
+      "react-hooks/exhaustive-deps": "off",
+    },
+  },
 );

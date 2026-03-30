@@ -151,72 +151,94 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     );
   }
 
-  // Default: Centered
+  // Default: Centered — Premium
   return (
-    <section className={cn("relative min-h-screen flex items-center py-12 md:py-20 bg-transparent backdrop-blur-sm", className)}>
-
+    <section
+      className={cn(
+        "relative min-h-[100svh] flex items-center py-32 bg-transparent",
+        className
+      )}
+    >
       <div className={containerClass}>
-        <div className="text-center space-y-8 max-w-3xl mx-auto">
+        <div className="text-center max-w-4xl mx-auto space-y-10 animate-fade-up">
+
+          {/* Pre-heading badge */}
           {subtitle && (
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-100 border border-cyan-300">
-              <span className="w-2 h-2 rounded-full bg-cyan-600"></span>
-              <span className="text-sm font-medium text-cyan-800">{subtitle}</span>
+            <div className="section-badge mx-auto w-fit">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              {subtitle}
             </div>
           )}
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white leading-tight">
-            {title}
+          {/* Main headline */}
+          <h1 className="text-5xl md:text-6xl lg:text-[4.5rem] font-display font-bold leading-[1.08] tracking-tight text-balance text-foreground">
+            {title.split(" ").map((word, i, arr) => {
+              const isLast = i === arr.length - 1;
+              return (
+                <React.Fragment key={i}>
+                  {isLast ? (
+                    <span className="gradient-text">{word}</span>
+                  ) : (
+                    word
+                  )}
+                  {!isLast && " "}
+                </React.Fragment>
+              );
+            })}
           </h1>
 
+          {/* Description */}
           {description && (
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">{description}</p>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed text-balance">
+              {description}
+            </p>
           )}
 
-          {/* Features Grid */}
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+            {primaryCTA && (
+              <button
+                onClick={primaryCTA.onClick}
+                disabled={primaryCTA.loading}
+                className="btn-primary text-base px-8 py-3 glow-effect"
+              >
+                {primaryCTA.label}
+                {!primaryCTA.loading && <ArrowRight className="w-4 h-4" />}
+              </button>
+            )}
+            {secondaryCTA && (
+              <button
+                onClick={secondaryCTA.onClick}
+                className="btn-secondary text-base px-8 py-3"
+              >
+                {secondaryCTA.label}
+              </button>
+            )}
+          </div>
+
+          {/* Feature chips */}
           {features && features.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+            <div className="flex flex-wrap gap-2 justify-center pt-3">
               {features.map((feature, idx) => (
-                <div key={idx} className="flex items-center justify-center gap-2">
-                  <Check className="w-5 h-5 text-cyan-400" />
-                  <span className="text-white/80">{feature}</span>
-                </div>
+                <span
+                  key={idx}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium text-muted-foreground bg-white/[0.04] border border-white/[0.08]"
+                >
+                  <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                  {feature}
+                </span>
               ))}
             </div>
           )}
 
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-            {primaryCTA && (
-              <Button
-                onClick={primaryCTA.onClick}
-                disabled={primaryCTA.loading}
-                className="gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
-                size="lg"
-              >
-                {primaryCTA.label}
-                {!primaryCTA.loading && <ArrowRight className="w-5 h-5" />}
-              </Button>
-            )}
-            {secondaryCTA && (
-              <Button
-                onClick={secondaryCTA.onClick}
-                variant="outline"
-                className="border-gray-300"
-                size="lg"
-              >
-                {secondaryCTA.label}
-              </Button>
-            )}
-          </div>
-
-          {/* Image Below */}
+          {/* Optional hero image */}
           {image && (
-            <div className="relative mt-12">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-2xl blur-2xl opacity-20"></div>
+            <div className="relative mt-16 rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 blur-2xl opacity-40" />
               <img
                 src={image}
-                alt={imageAlt || "Hero Image"}
-                className="relative rounded-2xl shadow-2xl w-full h-auto object-cover"
+                alt={imageAlt || "Hero"}
+                className="relative rounded-2xl shadow-2xl w-full h-auto object-cover border border-white/[0.08]"
               />
             </div>
           )}

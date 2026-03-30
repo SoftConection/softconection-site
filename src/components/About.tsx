@@ -1,5 +1,5 @@
 import { Target, Users, Zap, Award } from "lucide-react";
-import logo from "@/assets/logo.png";
+import { Logo } from "@/components/branding/Logo";
 
 const features = [
   {
@@ -79,11 +79,14 @@ const About = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
                 
                 <div className="text-center p-6 relative z-10">
-                  <img 
-                    src={logo} 
-                    alt="Softconection" 
-                    className="h-24 md:h-32 w-auto mx-auto mb-4 drop-shadow-[0_0_40px_hsl(198_85%_55%/0.4)]" 
-                  />
+                  <div className="mx-auto mb-4 flex justify-center">
+                    <Logo
+                      size="large"
+                      animated
+                      showWordmark={false}
+                      className="drop-shadow-[0_0_40px_hsl(198_85%_55%/0.4)]"
+                    />
+                  </div>
                   <div className="text-muted-foreground text-lg">
                     Criação Inovadora
                   </div>

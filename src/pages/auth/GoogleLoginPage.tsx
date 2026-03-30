@@ -5,12 +5,17 @@
 
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import {
+  GoogleLogin,
+  GoogleOAuthProvider,
+  type CredentialResponse,
+} from "@react-oauth/google";
 import { useAuth } from "@/contexts/AuthContext";
-import { COMPANY_INFO, BRAND_COLORS } from "@/config/branding";
-import logo from "@/assets/logo.png";
+import { COMPANY_INFO } from "@/config/branding";
 import { Lock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { extractGoogleUserData } from "@/lib/googleAuth";
+import { Logo } from "@/components/branding/Logo";
 
 const GoogleLoginContent: React.FC = () => {
   const navigate = useNavigate();
@@ -22,27 +27,16 @@ const GoogleLoginContent: React.FC = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  const handleGoogleSuccess = (credentialResponse: any) => {
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
     try {
-      // Decodificar o JWT token
-      const token = credentialResponse.credential;
-      const decoded = JSON.parse(atob(token.split(".")[1]));
+      const userData = extractGoogleUserData(credentialResponse);
+      if (!userData) {
+        console.error("Credencial Google inválida ou incompleta");
+        return;
+      }
 
-      // Armazenar informações do usuário
-      const userData = {
-        id: decoded.sub,
-        name: decoded.name,
-        email: decoded.email,
-        picture: decoded.picture,
-        verified: decoded.email_verified,
-      };
-
-      // Armazenar no localStorage
-      localStorage.setItem("google_auth_token", token);
-      localStorage.setItem("user_data", JSON.stringify(userData));
-
-      // Executar login
-      login(userData);
+      // Executar login com payload sanitizado
+      await login(userData);
 
       // Redirecionar para dashboard
       navigate("/dashboard", { replace: true });
@@ -68,14 +62,9 @@ const GoogleLoginContent: React.FC = () => {
         <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 border border-gray-100">
           {/* Logo e Branding */}
           <div className="text-center mb-8">
-            <img
-              src={logo}
-              alt="SoftConection"
-              className="h-16 mx-auto mb-4 drop-shadow-md"
-            />
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              SoftConection
-            </h1>
+            <div className="flex justify-center mb-3">
+              <Logo size="large" animated />
+            </div>
             <p className="text-gray-600">
               Acesse seu dashboard profissional
             </p>
@@ -167,7 +156,7 @@ const GoogleLoginContent: React.FC = () => {
         {/* Info Card */}
         <div className="mt-6 p-4 bg-white/70 backdrop-blur-sm rounded-lg border border-gray-200 text-center">
           <p className="text-sm text-gray-600">
-            Baseado em <span style={{ color: BRAND_COLORS.secondary }}>●</span>{" "}
+            Baseado em <span className="text-cyan-500">●</span>{" "}
             {COMPANY_INFO.locations.map((l) => l.city).join(" & ")}
           </p>
         </div>
@@ -177,8 +166,23 @@ const GoogleLoginContent: React.FC = () => {
 };
 
 export const GoogleLoginPage: React.FC = () => {
-  const googleClientId =
-    "769154537622-meid4vk2fb5rsmip5oh59kpc5m7jco6l.apps.googleusercontent.com";
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  if (!googleClientId) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
+        <div className="max-w-md text-center space-y-3">
+          <h1 className="text-2xl font-bold text-slate-900">Google OAuth não configurado</h1>
+          <p className="text-sm text-slate-600">
+            Defina VITE_GOOGLE_CLIENT_ID para habilitar este método de login.
+          </p>
+          <Button onClick={() => window.history.back()} variant="outline">
+            Voltar
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <GoogleOAuthProvider clientId={googleClientId}>

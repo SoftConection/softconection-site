@@ -16,9 +16,15 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { toast } from "sonner";
+import { Logo } from "@/components/branding/Logo";
 import UserStorageService from "@/services/UserStorageService";
 import { AccountType } from "@/types/user";
-import { cn } from "@/lib/utils";
+
+const roleByAccountType: Record<AccountType, "client" | "partner" | "technician"> = {
+  cliente: "client",
+  parceiro: "partner",
+  colaborador: "technician",
+};
 
 export const RegisterPage: React.FC = () => {
   const [step, setStep] = useState<1 | 2>(1);
@@ -67,7 +73,7 @@ export const RegisterPage: React.FC = () => {
 
     try {
       // Registrar no serviço local
-      const userProfile = UserStorageService.registerUser({
+      UserStorageService.registerUser({
         name: formData.name,
         email: formData.email,
         password: formData.password,
@@ -83,12 +89,16 @@ export const RegisterPage: React.FC = () => {
         password: formData.password,
         company: formData.company,
         phone: formData.phone,
+        role: roleByAccountType[accountType],
       });
 
       toast.success("🎉 Conta criada com sucesso!");
       navigate("/dashboard");
-    } catch (error: any) {
-      toast.error(error.message || "Erro ao criar conta. Tente novamente.");
+    } catch (error: unknown) {
+      const message = error instanceof Error
+        ? error.message
+        : "Erro ao criar conta. Tente novamente.";
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
@@ -108,14 +118,13 @@ export const RegisterPage: React.FC = () => {
         <div className="relative w-full max-w-2xl">
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-2xl mx-auto mb-4">
-              <span className="text-white font-display font-bold text-2xl">SC</span>
+            <div className="flex justify-center mb-3">
+              <Logo size="large" animated className="drop-shadow-md" />
             </div>
             <h1 className="text-4xl font-display font-bold mb-3">Bem-vindo à SoftConection</h1>
             <p className="text-muted-foreground text-lg">Escolha seu tipo de conta para começar</p>
           </div>
 
-          {/* Account Type Selection */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Cliente */}
             <button
@@ -236,8 +245,8 @@ export const RegisterPage: React.FC = () => {
       <div className="relative w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-2xl mx-auto mb-4">
-            <span className="text-white font-display font-bold text-2xl">SC</span>
+          <div className="flex justify-center mb-3">
+            <Logo size="large" animated className="drop-shadow-md" />
           </div>
           <h1 className="text-3xl font-display font-bold mb-2">Complete seu Perfil</h1>
           <p className="text-muted-foreground text-sm">

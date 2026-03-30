@@ -12,13 +12,10 @@ import {
   Menu,
   X,
   ChevronDown,
-  Home,
-  BarChart3,
-  Users,
-  Clock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/branding/Logo";
 
 interface NavItem {
   id: string;
@@ -40,20 +37,13 @@ const NAVIGATION: NavItem[] = [
     id: "services",
     label: "Serviços",
     icon: <Wrench className="w-5 h-5" />,
-    submenu: [
-      { id: "browse", label: "Ver Serviços", icon: <Home className="w-4 h-4" />, href: "/services" },
-      { id: "my-requests", label: "Meus Pedidos", icon: <Clock className="w-4 h-4" />, href: "/services/requests" },
-      { id: "my-services", label: "Meus Serviços", icon: <Wrench className="w-4 h-4" />, href: "/services/manage", adminOnly: true },
-    ],
+    href: "/services",
   },
   {
     id: "appointments",
     label: "Agendamentos",
     icon: <Calendar className="w-5 h-5" />,
-    submenu: [
-      { id: "schedule", label: "Agendar", icon: <Calendar className="w-4 h-4" />, href: "/appointments/schedule" },
-      { id: "calendar", label: "Meu Calendário", icon: <BarChart3 className="w-4 h-4" />, href: "/appointments/calendar" },
-    ],
+    href: "/appointments/calendar",
   },
   {
     id: "orders",
@@ -65,24 +55,13 @@ const NAVIGATION: NavItem[] = [
     id: "proposals",
     label: "Propostas",
     icon: <FileText className="w-5 h-5" />,
-    submenu: [
-      { id: "create", label: "Criar Proposta", icon: <FileText className="w-4 h-4" />, href: "/proposals/create", adminOnly: true },
-      { id: "my-proposals", label: "Minhas Propostas", icon: <FileText className="w-4 h-4" />, href: "/proposals" },
-    ],
+    href: "/proposals",
   },
   {
-    id: "analytics",
-    label: "Relatórios",
-    icon: <BarChart3 className="w-5 h-5" />,
-    href: "/analytics",
-    adminOnly: true,
-  },
-  {
-    id: "team",
-    label: "Equipe",
-    icon: <Users className="w-5 h-5" />,
-    href: "/team",
-    adminOnly: true,
+    id: "settings",
+    label: "Configurações",
+    icon: <Settings className="w-5 h-5" />,
+    href: "/settings",
   },
 ];
 
@@ -175,15 +154,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className, isOpen = true, onCl
     <div className="flex flex-col h-full">
       {/* Logo / Header */}
       <div className="px-6 py-8 border-b border-border/30">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
-            <span className="text-white font-bold text-lg">SC</span>
-          </div>
-          <div className="flex-1">
-            <h1 className="font-display font-bold text-lg text-foreground">SoftConection</h1>
-            <p className="text-xs text-muted-foreground">Soluções TI</p>
-          </div>
-        </div>
+        <Logo size="medium" animated compactOnMobile />
       </div>
 
       {/* Navigation */}

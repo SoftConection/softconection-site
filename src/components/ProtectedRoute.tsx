@@ -1,10 +1,11 @@
 import React from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigate } from "react-router-dom";
+import { hasSomeRole, type PlatformRole } from "@/lib/accessControl";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: string;
+  requiredRole?: PlatformRole | PlatformRole[];
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
@@ -17,7 +18,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/auth/login" replace />;
   }
 
-  if (requiredRole && user?.role !== requiredRole) {
+  if (!hasSomeRole(user?.role, requiredRole)) {
     return <Navigate to="/dashboard" replace />;
   }
 

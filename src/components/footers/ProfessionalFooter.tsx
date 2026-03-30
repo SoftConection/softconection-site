@@ -1,27 +1,13 @@
 /**
- * Footer Profissional e Tecnológico para SoftConection
- * Componente reutilizável com design moderno e interativo
+ * Footer Premium — SoftConection
+ * Glass morphism • minimal • spacious
  */
 
 import React from "react";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Facebook,
-  Linkedin,
-  Twitter,
-  Github,
-  Code2,
-  Shield,
-  Zap,
-  Lightbulb,
-  Globe,
-  Cpu,
-} from "lucide-react";
-import logo from "@/assets/logo.png";
+import { Mail, Phone, MapPin, Linkedin, Twitter, Github, Globe } from "lucide-react";
 import { COMPANY_INFO } from "@/config/branding";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/branding/Logo";
 
 interface ProfessionalFooterProps {
   className?: string;
@@ -36,308 +22,160 @@ export const ProfessionalFooter: React.FC<ProfessionalFooterProps> = ({
 
   const footerLinks = {
     Produto: [
-      { label: "Serviços", href: "#services" },
-      { label: "Preços", href: "#pricing" },
-      { label: "Segurança", href: "#security" },
+      { label: "Serviços",   href: "#services" },
+      { label: "Soluções",   href: "#services" },
+      { label: "Segurança",  href: "#about" },
     ],
     Empresa: [
-      { label: "Sobre", href: "#about" },
-      { label: "Blog", href: "#blog" },
-      { label: "Carreira", href: "#careers" },
+      { label: "Sobre nós",  href: "#about" },
+      { label: "Carreiras",  href: "#" },
+      { label: "Blog",       href: "#" },
     ],
     Suporte: [
-      { label: "Contato", href: "#contact" },
-      { label: "FAQ", href: "#faq" },
-      { label: "Centro de Ajuda", href: "#help" },
+      { label: "Contato",    href: "#contact" },
+      { label: "FAQ",        href: "#" },
+      { label: "Ajuda",      href: "#" },
     ],
     Legal: [
       { label: "Privacidade", href: "/privacy" },
-      { label: "Termos", href: "/terms" },
-      { label: "Cookies", href: "/cookies" },
+      { label: "Termos",      href: "/terms" },
+      { label: "Cookies",     href: "/cookies" },
     ],
   };
 
-  const techFeatures = [
-    {
-      icon: Code2,
-      title: "Código de Qualidade",
-      description: "Padrões e melhores práticas",
-    },
-    {
-      icon: Shield,
-      title: "Segurança",
-      description: "Certificado e protegido",
-    },
-    {
-      icon: Zap,
-      title: "Performance",
-      description: "Otimizado e rápido",
-    },
-    {
-      icon: Lightbulb,
-      title: "Inovação",
-      description: "Sempre evoluindo",
-    },
+  const socials = [
+    { icon: Linkedin, href: COMPANY_INFO.social?.linkedin ?? "#", label: "LinkedIn" },
+    { icon: Twitter,  href: COMPANY_INFO.social?.twitter  ?? "#", label: "Twitter" },
+    { icon: Github,   href: COMPANY_INFO.social?.github   ?? "#", label: "GitHub" },
+    { icon: Globe,    href: "#",                                   label: "Website" },
   ];
 
   return (
-    <footer className={cn("relative bg-slate-950 text-gray-300 overflow-hidden", className)}>
-      {/* Animated Background Grid */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/20 via-transparent to-blue-500/20" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500 rounded-full blur-3xl opacity-20" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-20" />
-      </div>
+    <footer className={cn("relative bg-[hsl(222,24%,4%)] text-foreground/70 overflow-hidden", className)}>
 
-      {/* Content Container */}
-      <div className="relative z-10">
-        {/* Newsletter Section */}
+      {/* ── Top border glow line ───────────────────────── */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+
+      {/* ── Ambient glow ───────────────────────────────── */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[240px] blur-[100px] pointer-events-none bg-[radial-gradient(ellipse,rgba(0,211,255,0.06)_0%,transparent_70%)]" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+
+        {/* ── Newsletter ─────────────────────────────────── */}
         {withNewsletter && (
-          <div className="relative overflow-hidden border-b border-cyan-500/20">
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/10 via-blue-600/10 to-purple-600/10" />
-            <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-display font-bold mb-2 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                    Fique Atualizado
-                  </h3>
-                  <p className="text-gray-300">
-                    Receba as últimas notícias e dicas de TI direto na sua caixa de entrada.
-                  </p>
-                </div>
-                <form className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="seu@email.com"
-                    className="flex-1 px-4 py-3 rounded-lg bg-slate-900 border border-cyan-500/30 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all"
-                  />
-                  <button
-                    type="submit"
-                    className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105"
-                  >
-                    Inscrever
-                  </button>
-                </form>
+          <div className="py-12 border-b border-white/[0.07]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div>
+                <p className="section-badge mb-4">Newsletter</p>
+                <h3 className="text-2xl font-display font-bold text-foreground mb-2 leading-snug">
+                  Fique à frente da tecnologia
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Receba insights de TI, actualizações de serviço e novidades directo na sua caixa de entrada.
+                </p>
               </div>
+              <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
+                <input
+                  type="email"
+                  placeholder="seu@email.com"
+                  className="flex-1 px-4 py-2.5 rounded-lg text-sm bg-white/[0.05] border border-white/[0.10] text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/40 transition-all"
+                />
+                <button type="submit" className="btn-primary whitespace-nowrap">
+                  Inscrever
+                </button>
+              </form>
             </div>
           </div>
         )}
 
-        {/* Tech Features */}
-        <div className="border-b border-slate-800">
-          <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-12">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {techFeatures.map((feature, idx) => {
-                const Icon = feature.icon;
-                return (
-                  <div
-                    key={idx}
-                    className="group p-4 rounded-xl bg-slate-900/50 border border-slate-800 hover:border-cyan-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10"
-                  >
-                    <div className="mb-3 p-2 w-fit rounded-lg bg-cyan-500/10 group-hover:bg-cyan-500/20 transition-colors">
-                      <Icon className="w-5 h-5 text-cyan-400" />
-                    </div>
-                    <h4 className="font-semibold text-white mb-1 text-sm">
-                      {feature.title}
-                    </h4>
-                    <p className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">
-                      {feature.description}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        {/* ── Main Grid ──────────────────────────────────── */}
+        <div className="py-16 grid grid-cols-2 md:grid-cols-6 gap-10 border-b border-white/[0.07]">
 
-        {/* Main Footer Content */}
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-20">
-          {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-16">
-            {/* Brand */}
-            <div className="space-y-4 md:col-span-1">
-              <div className="flex items-center gap-2">
-                <img src={logo} alt="SoftConection" className="h-12 w-auto" />
-              </div>
-              <p className="text-sm text-gray-400">
-                {COMPANY_INFO.description}
-              </p>
-              {/* Locações */}
-              <div className="space-y-2 pt-4 border-t border-slate-800">
-                {COMPANY_INFO.locations.map((loc) => (
-                  <div key={loc.city} className="flex items-center gap-2 text-xs">
-                    <MapPin className="w-4 h-4 text-cyan-400" />
-                    <span className="text-gray-400">{loc.flag} {loc.address}</span>
-                  </div>
-                ))}
-              </div>
+          {/* Brand column */}
+          <div className="col-span-2 space-y-5">
+            <div className="flex items-center gap-3">
+              <Logo size="small" animated />
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
+              {COMPANY_INFO.description}
+            </p>
+
+            {/* Locations */}
+            <div className="space-y-2 pt-2">
+              {COMPANY_INFO.locations.map((loc) => (
+                <div key={loc.city} className="flex items-start gap-2 text-xs text-muted-foreground">
+                  <MapPin className="w-3.5 h-3.5 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{loc.flag} {loc.city} — {loc.address}</span>
+                </div>
+              ))}
             </div>
 
-            {/* Links */}
-            {Object.entries(footerLinks).map(([title, links]) => (
-              <div key={title}>
-                <h4 className="font-display font-bold text-white mb-4 text-sm uppercase tracking-wide">
-                  {title}
-                </h4>
-                <ul className="space-y-2">
-                  {links.map((link) => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        className="text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-300 inline-flex items-center gap-1 group"
-                      >
-                        {link.label}
-                        <span className="w-0 h-0.5 bg-cyan-400 group-hover:w-3 transition-all duration-300" />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Contact Section */}
-          <div className="border-t border-slate-800 pt-12 mb-8">
-            <h3 className="font-display font-bold text-white mb-6 text-sm uppercase tracking-wide">
-              Entre em Contato
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {/* Email */}
+            {/* Contact quick links */}
+            <div className="space-y-2 pt-1">
               <a
                 href={`mailto:${COMPANY_INFO.contact.email}`}
-                className="group relative overflow-hidden rounded-xl p-4 bg-slate-900/50 border border-slate-800 hover:border-cyan-500/50 transition-all duration-300"
+                className="flex items-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-cyan-500/10 group-hover:bg-cyan-500/20 transition-colors">
-                    <Mail className="w-5 h-5 text-cyan-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-gray-400 group-hover:text-cyan-400 transition-colors">
-                      Email
-                    </p>
-                    <p className="text-sm font-medium">{COMPANY_INFO.contact.email}</p>
-                  </div>
-                </div>
+                <Mail className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                {COMPANY_INFO.contact.email}
               </a>
-
-              {/* Phone */}
               <a
                 href={`tel:${COMPANY_INFO.contact.phone}`}
-                className="group relative overflow-hidden rounded-xl p-4 bg-slate-900/50 border border-slate-800 hover:border-cyan-500/50 transition-all duration-300"
+                className="flex items-center gap-2 text-xs text-muted-foreground hover:text-primary transition-colors"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-cyan-500/10 group-hover:bg-cyan-500/20 transition-colors">
-                    <Phone className="w-5 h-5 text-cyan-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-gray-400 group-hover:text-cyan-400 transition-colors">
-                      Telefone
-                    </p>
-                    <p className="text-sm font-medium">{COMPANY_INFO.contact.phone}</p>
-                  </div>
-                </div>
-              </a>
-
-              {/* WhatsApp Brasil */}
-              <a
-                href={`https://wa.me/${COMPANY_INFO.contact.whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative overflow-hidden rounded-xl p-4 bg-slate-900/50 border border-slate-800 hover:border-green-500/50 transition-all duration-300"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-green-500/10 group-hover:bg-green-500/20 transition-colors">
-                    <Globe className="w-5 h-5 text-green-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-gray-400 group-hover:text-green-400 transition-colors">
-                      WhatsApp 🇧🇷
-                    </p>
-                    <p className="text-sm font-medium">{COMPANY_INFO.contact.phone}</p>
-                  </div>
-                </div>
-              </a>
-
-              {/* WhatsApp Angola */}
-              <a
-                href={`https://wa.me/${COMPANY_INFO.contact.whatsappAngola}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative overflow-hidden rounded-xl p-4 bg-slate-900/50 border border-slate-800 hover:border-amber-500/50 transition-all duration-300"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-amber-500/10 group-hover:bg-amber-500/20 transition-colors">
-                    <Phone className="w-5 h-5 text-amber-400" />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-gray-400 group-hover:text-amber-400 transition-colors">
-                      Telefone 🇦🇴
-                    </p>
-                    <p className="text-sm font-medium">{COMPANY_INFO.contact.phoneAngola}</p>
-                  </div>
-                </div>
+                <Phone className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                {COMPANY_INFO.contact.phone}
               </a>
             </div>
           </div>
 
-          {/* Divider */}
-          <div className="border-t border-slate-800 pt-12">
-            {/* Social Links */}
-            <div className="flex justify-center gap-4 mb-8">
-              <a
-                href={COMPANY_INFO.social.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900/50 border border-slate-800 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all duration-300 hover:scale-110"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a
-                href={COMPANY_INFO.social.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900/50 border border-slate-800 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all duration-300 hover:scale-110"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href={COMPANY_INFO.social.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900/50 border border-slate-800 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all duration-300 hover:scale-110"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <a
-                href={COMPANY_INFO.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg bg-slate-900/50 border border-slate-800 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/50 transition-all duration-300 hover:scale-110"
-                aria-label="Instagram"
-              >
-                <span className="text-sm">📷</span>
-              </a>
+          {/* Link columns */}
+          {Object.entries(footerLinks).map(([title, links]) => (
+            <div key={title}>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-foreground/45 mb-5">
+                {title}
+              </h4>
+              <ul className="space-y-3">
+                {links.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
+          ))}
+        </div>
 
-            {/* Copyright */}
-            <div className="text-center pt-8 border-t border-slate-800">
-              <p className="text-sm text-gray-500">
-                © {currentYear} {COMPANY_INFO.name}. Todos os direitos reservados.
-              </p>
-              <p className="text-xs text-gray-600 mt-2">
-                Desenvolvido com ❤️ e tecnologia de ponta.
-              </p>
-            </div>
+        {/* ── Bottom bar ─────────────────────────────────── */}
+        <div className="py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-muted-foreground/55 order-2 sm:order-1">
+            © {currentYear} SoftConection. Todos os direitos reservados.
+          </p>
+
+          {/* Social icons */}
+          <div className="flex items-center gap-2 order-1 sm:order-2">
+            {socials.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/10 border border-white/[0.07] hover:border-primary/25 transition-all duration-200"
+              >
+                <Icon className="w-3.5 h-3.5" />
+              </a>
+            ))}
           </div>
         </div>
+
       </div>
     </footer>
   );
 };
+

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, MapPin } from "lucide-react";
-import logo from "@/assets/logo.png";
 import ThemeToggle from "@/components/ThemeToggle";
+import { Logo } from "@/components/branding/Logo";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -33,8 +33,8 @@ const Header = () => {
       <div className="container-custom">
         <nav className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <a href="#inicio" className="flex items-center gap-2">
-              <img src={logo} alt="Softconection" className="h-10 md:h-12 w-auto transition-all" />
+            <a href="#inicio" className="flex items-center gap-2" title="SoftConection - Início" aria-label="SoftConection - Início">
+              <Logo size="medium" animated compactOnMobile showWordmark={false} />
             </a>
             {/* Location Badge */}
             <div className="hidden lg:flex items-center gap-3 ml-4 pl-4 border-l border-border/30">

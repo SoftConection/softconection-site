@@ -1,16 +1,15 @@
 import React from "react";
-import { Sidebar, Header, MainLayout } from "@/components/layout";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 
 interface AppLayoutProps {
   children: React.ReactNode;
+  title?: string;
 }
 
-export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+export const AppLayout: React.FC<AppLayoutProps> = ({ children, title }) => {
   return (
-    <>
-      <Sidebar />
-      <Header />
-      <MainLayout>{children}</MainLayout>
-    </>
+    <DashboardLayout title={title} showTechBackground>
+      {children}
+    </DashboardLayout>
   );
 };

@@ -8,7 +8,7 @@
  * - Histórico de atividades
  */
 
-import { UserProfile, UserCredentials } from "@/types/user";
+import { UserProfile, UserCredentials, AccountType } from "@/types/user";
 
 const STORAGE_KEYS = {
   USERS: "sc_users",
@@ -18,12 +18,34 @@ const STORAGE_KEYS = {
 };
 
 // Interface para dados armazenados
+type GenericRecord = Record<string, unknown>;
+
+interface ActivityRecord {
+  id: string;
+  userId: string;
+  type: string;
+  description: string;
+  timestamp: string;
+  [key: string]: unknown;
+}
+
 interface StorageData {
   users: UserProfile[];
-  sessions: any[];
-  contacts: any[];
-  activities: any[];
+  sessions: GenericRecord[];
+  contacts: GenericRecord[];
+  activities: ActivityRecord[];
   lastSync: string;
+}
+
+interface BackupData extends StorageData {
+  version: string;
+  exportedAt: string;
+}
+
+declare global {
+  interface Window {
+    SC_BACKUP?: BackupData;
+  }
 }
 
 // Validar e obter dados do localStorage
@@ -31,12 +53,12 @@ const getStorageData = (): StorageData => {
   try {
     const data = localStorage.getItem(STORAGE_KEYS.USERS);
     if (data) {
-      const parsed = JSON.parse(data);
+      const parsed = JSON.parse(data) as Partial<StorageData>;
       return {
-        users: parsed.users || [],
-        sessions: parsed.sessions || [],
-        contacts: parsed.contacts || [],
-        activities: parsed.activities || [],
+        users: Array.isArray(parsed.users) ? parsed.users : [],
+        sessions: Array.isArray(parsed.sessions) ? parsed.sessions : [],
+        contacts: Array.isArray(parsed.contacts) ? parsed.contacts : [],
+        activities: Array.isArray(parsed.activities) ? parsed.activities : [],
         lastSync: parsed.lastSync || new Date().toISOString(),
       };
     }
@@ -74,14 +96,14 @@ const saveStorageData = (data: StorageData) => {
 // Exportar dados como JSON
 const downloadBackup = (data: StorageData) => {
   try {
-    const backup = {
+    const backup: BackupData = {
       version: "1.0",
       exportedAt: new Date().toISOString(),
       ...data,
     };
 
     // Salvar como variável global para possível download
-    (window as any).SC_BACKUP = backup;
+    window.SC_BACKUP = backup;
 
     // Também salva no sessionStorage como backup temporário
     sessionStorage.setItem("sc_backup", JSON.stringify(backup));
@@ -182,7 +204,7 @@ export const UserStorageService = {
   /**
    * Obter usuários por tipo de conta
    */
-  getUsersByAccountType: (accountType: string): UserProfile[] => {
+  getUsersByAccountType: (accountType: AccountType): UserProfile[] => {
     const data = getStorageData();
     return data.users.filter((u) => u.accountType === accountType);
   },
@@ -222,7 +244,7 @@ export const UserStorageService = {
   /**
    * Obter atividades recentes
    */
-  getRecentActivities: (limit: number = 10): any[] => {
+  getRecentActivities: (limit: number = 10): ActivityRecord[] => {
     const data = getStorageData();
     return data.activities.sort((a, b) => {
       return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
